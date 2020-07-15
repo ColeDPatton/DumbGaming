@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-171826103-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-171826103-2');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A fun game solely developed for the 
+                purpose of entertainment. Jump from ledge to ledge to reach 
+                the green square while avoiding tricks and traps.">
+    <meta name="keywords" content="Dumb Gaming,Dumb game,dumb,gaming,game,
+                platformer,fun,entertainment,project,developer,blocks,
+                level creator">
+    <link rel="stylesheet" href="communityPage.css">
+    <title>Dumb Gaming</title>
+</head>
+
+<body class="no_select" id="body">
+    <header>
+        <img src="DumbGamingLogo.svg" class="logo" onclick="homeScreen()" alt="Dumb Gaming logo">
+
+        <div class="navigationBar">
+            <button class="navigation" onclick="homeScreen()">Home</button>
+            <button class="navigation" onclick="location.href='/community'">Community Levels</button>
+            <button class="navigation" onclick="location.href='/creative'">Level Creator</button>
+            <button class="navigation">Races</button>
+            <button class="navigation" id="logging" onclick="location.href='/login'">Log In</button>
+        </div>
+        <div class="burger">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
+        </div>
+    </header>
+    <div class="mobileNavigation">
+        <button class="navigation" onclick="homeScreen()">Home</button>
+        <button class="navigation" onclick="location.href='/community'">Community Levels</button>
+        <button class="navigation" onclick="location.href='/creative'">Level Creator</button>
+        <button class="navigation">Races</button>
+        <button class="navigation" id="logging" onclick="location.href='/login'">Log In</button>
+    </div>
+
+    <section class="main-container" style="display: block;">
+        <div id="viewOptions">
+            <div id="searchOptions">
+                <input id="searchFor" type="text" placeholder="Enter level's name" name="name" required>
+                <button class="myButtonSmall searchButton" id="search">Search</button>
+            </div>
+            <div id="sortOptions">
+                <select id="sortBy" aria-placeholder="Sort By">
+                    <option value="Recently Created">Recently Created</option>
+                    <option value="Top Rated">Top Rated</option>
+                    <option value="Most Deaths">Most Deaths</option>
+                    <option value="Most Times Beaten">Most Times Beaten</option>
+                </select>
+                <button class="myButtonSmall searchButton" id="search">Sort</button>
+            </div>
+        </div>
+        <div id="ratingContainerTemplate">
+            <h3 id="rating">Click Stars to Rate Level:</h3>
+            <div class="stars">
+                <span class=individualStar>☆</span><span class=individualStar>☆</span><span
+                    class=individualStar>☆</span><span class=individualStar>☆</span><span class=individualStar>☆</span>
+            </div>
+            <button id="submitRatingButton" class="myButton" onclick="rateLevel()">Submit Rating</button>
+        </div>
+        <div class="level-container" id="sl"></div>
+        <div class="gameDiv" id="gameDiv">
+            <canvas class="canvas" id="canvasId"></canvas>
+        </div>
+    </section>
+    <footer class="footerAdjust">
+        <div class="about-me footer-text">
+            <div class="about-text">
+                <h2 class="footer-title">About Me</h2>
+                <p>
+                    Thanks for visiting my website! My name is Cole Patton and I am the sole developer of this
+                    website.
+                    This
+                    website is a small project of mine that I work on for fun,
+                    and acts as a playground for me to experiment with different aspects of full stack development.
+                    Please
+                    feel free to email me with any advice or suggestions.
+                </p>
+            </div>
+        </div>
+        <div class="contact footer-text">
+            <div class="contact-text">
+                <h2 class="footer-title">Contact</h2>
+                <p>
+                    For questions, suggestions, or issues with the site, please contact me at
+                    <a href="mailto:patton1502@gmail.com">patton1502@gmail.com</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Start JavaScript -->
+    <!-- Start JavaScript -->
+    <!-- Start JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"
+        integrity="sha256-lPE3wjN2a7ABWHbGz7+MKBJaykyzqCbU96BJWjio86U=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+    <script src="block.js"></script>
+    <script src="display.js"></script>
+    <script src="controller.js"></script>
+    <script src="levelEditor.js"></script>
+    <script src="game.js"></script>
+    <script src="levelPreview.js"></script>
+    <script src="communityNav.js"></script>
+    <script>
+        canvas.width = 800;
+        canvas.height = 400;
+
+        // logIn("king");
+
+        function selectTemplate(template) {
+            for (k = 0; k < document.getElementsByClassName("selected-level").length; k++) {
+                document.getElementsByClassName("selected-level").item(k).classList.remove("selected-level");
+            }
+        }
+
+        var publicTemplatesLoaded = false;
+        var socket = io();
+
+        viewTemplates();
+        function viewTemplates() {
+            if (!publicTemplatesLoaded) {
+                socket.emit('loadPublicLevelNames');
+                publicTemplatesLoaded = true;
+            }
+            socket.on('loadPublicLevelNamesResponse', function (data) {
+                for (i = 0; i < data.publicNames.length; i++) {
+                    const name = data.publicNames[i].custom_level_name;
+                    const levelCard = createCard(name);
+                    document.body.getElementsByClassName("level-container").item(0).appendChild(levelCard);
+                    socket.emit('loadPublicLevelTemplates', { canvasId: name });
+                }
+            });
+        }
+
+        var unselectCard = false;
+
+        function createCard(name) {
+            const card = document.createElement("div");
+            const publicLevel = document.createElement("canvas");
+            const levelTitle = document.createElement("div");
+            const levelName = document.createElement("h2");
+            const levelRating = document.createElement("h3");
+            const totalDeaths = document.createElement("h3");
+            const timesBeaten = document.createElement("h3");
+
+            levelTitle.classList.add("levelTitle");
+            levelName.innerText = name;
+            levelName.classList.add("levelName");
+            levelRating.innerText = "Unrated";
+            levelRating.classList.add("details", "rating");
+            totalDeaths.innerText = "303 deaths caused";
+            totalDeaths.classList.add("details");
+            timesBeaten.innerText = "54 times beaten";
+            timesBeaten.classList.add("details");
+            card.classList.add("level");
+            card.id = "cardId" + name;
+            publicLevel.classList = "template custom-template";
+            publicLevel.id = "publicId" + name;
+
+            card.onclick = () => {
+                if (unselectCard) {
+                    const selectedCard = document.getElementsByClassName("selectedCard").item(0);
+                    oldGameDiv = document.getElementsByClassName("gameDiv").item(0);
+                    selectedCard.removeChild(oldGameDiv);
+                    selectedCard.classList.remove("selectedCard");
+                    unselectCard = false;
+                    gameStarted = false;
+                    return;
+                }
+                if (!card.classList.contains("selectedCard")) {
+                    for (k = 0; k < document.getElementsByClassName("selected-level").length; k++) {
+                        document.getElementsByClassName("selected-level").item(k).classList.remove("selected-level");
+                    }
+                    const mainContainer = document.getElementsByClassName("main-container").item(0);
+                    var oldGameDiv = document.getElementById("gameDiv");
+                    if (oldGameDiv) {
+                        mainContainer.removeChild(oldGameDiv);
+                    } else if (document.getElementsByClassName("selectedCard").length > 0) {
+                        const selectedCard = document.getElementsByClassName("selectedCard").item(0);
+                        const playButton = document.getElementById("playButton");
+                        const unselectCardButton = document.getElementById("unselectCardButton");
+                        playButton.remove();
+                        unselectCardButton.remove();
+                        document.getElementById("ratingContainer").remove();
+                        selectedCard.classList.remove("selectedCard");
+                        oldGameDiv = document.getElementsByClassName("gameDiv").item(0);
+                        oldGameDiv.remove();
+                    }
+                    card.classList.add("selectedCard");
+                    publicLevel.classList.add("selected-level");
+                    const gameDiv = document.createElement("div");
+                    gameDiv.classList.add("gameDiv");
+                    const playLevel = document.createElement("canvas");
+                    playLevel.classList.add("canvas");
+                    playLevel.id = "canvasId";
+                    playLevel.style.width = "100%";
+                    gameDiv.appendChild(playLevel);
+                    card.appendChild(gameDiv);
+
+                    canvas = document.getElementById("canvasId");
+                    canvas.width = 800;
+                    canvas.height = 400;
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    drawPlayer();
+                    gameMode = 0;
+                    socket.emit('loadPublicLevelFromTemplate', { name: name });
+
+                    createCloseCardButton();
+                    createRatingDiv();
+                }
+            }
+
+            levelTitle.appendChild(levelName);
+            card.appendChild(levelTitle);
+            card.appendChild(publicLevel);
+            card.appendChild(levelRating);
+            card.appendChild(totalDeaths);
+            card.appendChild(timesBeaten);
+
+            return card;
+        }
+
+        function createCloseCardButton() {
+            const playButton = document.createElement("button");
+            playButton.classList.add("myButton", "gameButton");
+            playButton.id = "playButton";
+            playButton.innerHTML = "Play Level";
+            const card = document.getElementsByClassName("selectedCard").item(0);
+            const unselectCardButton = document.createElement("div");
+            const line1 = document.createElement("div");
+            const line2 = document.createElement("div");
+            unselectCardButton.classList.add("unselectCardButton");
+            unselectCardButton.id = "unselectCardButton";
+            line1.classList.add("line1");
+            line2.classList.add("line2");
+            unselectCardButton.appendChild(line1);
+            unselectCardButton.appendChild(line2);
+
+            playButton.onclick = () => {
+                startGame(0);
+            }
+            unselectCardButton.onclick = () => {
+                playButton.remove();
+                unselectCardButton.remove();
+                document.getElementById("ratingContainer").remove();
+                unselectCard = true;
+            }
+            for (var i = 0; i < card.children.length; i++) {
+                if (card.children.item(i).classList.contains("levelTitle")) {
+                    card.children.item(i).appendChild(playButton);
+                    card.children.item(i).appendChild(unselectCardButton);
+                    break;
+                }
+            }
+
+            return unselectCardButton;
+        }
+
+        function createRatingDiv() {
+            const ratingContainerTemplate = document.getElementById("ratingContainerTemplate");
+            const ratingContainer = ratingContainerTemplate.cloneNode(true);
+            ratingContainer.id = "ratingContainer";
+            const card = document.getElementsByClassName("selectedCard").item(0);
+            card.appendChild(ratingContainer);
+            addStarsOnclick();
+        }
+
+        function addStarsOnclick() {
+            for (let i = 5; i < document.getElementsByClassName("individualStar").length; i++) {
+                document.getElementsByClassName("individualStar").item(i).id = "star" + (i - 5);
+            }
+            for (var i = 0; i < 5; i++) {
+                const a = i;
+                const star = document.getElementById("star" + a);
+                star.onclick = function () {
+                    for (let j = 0; j < (5 - a); j++) {
+                        const element = document.getElementById("star" + (4 - j));
+                        element.classList.add("rated");
+                    }
+                    for (let j = (5 - a); j < 5; j++) {
+                        const element = document.getElementById("star" + (4 - j));
+                        element.classList.remove("rated");
+                    }
+                }
+            }
+        }
+
+        function rateLevel() {
+            socket.emit("getUsername");
+        }
+        socket.on('getUsernameResponse', function (data) {
+            if (data.user === '') {
+                alert("Must be signed in to rate levels");
+            } else {
+                const rating = document.getElementsByClassName("rated").length;
+                const level = document.getElementsByClassName("selected-level")[0];
+                const levelName = level.id.slice(8, level.id.length);
+                socket.emit('ratingLevel', { rating: rating, levelName: levelName });
+            }
+        });
+
+        socket.on('ratingLevelResponse', function (data) {
+            if (data.success) {
+                document.getElementById("submitRatingButton").innerText = "Rating submitted";
+            }
+        });
+
+        document.getElementById("logging").onclick = function () {
+            location.href = "/logout";
+        };
+        socket.on('loadPublicResponse', function (data) {
+            var lvl = [];
+            data.blockData.forEach(block => {
+                lvl.push(block);
+            });
+            const card = document.getElementById("cardId" + data.id);
+            for (let i = 0; i < card.children.length; i++) {
+                if (card.children.item(i).classList.contains("rating")) {
+                    card.children.item(i).innerText = "Rating " + Math.round((data.rating + Number.EPSILON) * 10) / 10;
+                }
+            }
+            loadBlocksIntoTemplateCanvas(lvl, "publicId" + data.id, data.rating);
+        });
+        socket.on('loadLevelFromTemplateResponse', function (data) {
+            loadBlocksFromArray(data.blockData);
+        });
+        socket.on('terminated', function (data) {
+            document.getElementsByClassName("personal-level")[0].removeChild(document.getElementsByClassName("selected-level")[0]);
+            levelEditor();
+            closeDeletionForm();
+            document.getElementById("typeDelete").value = null;
+        });
+        socket.on('setSessionID', function (data) {
+            localStorage.setItem("uid", data.sid);
+        })
+        socket.on('getSessionID', function (data) {
+            const sid = localStorage.getItem("uid");
+            socket.emit('getSessionIDResponse', { sid: sid });
+        })
+    </script>
+</body>
+
+</html>
