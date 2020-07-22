@@ -44,6 +44,18 @@ function loadLevelEditorDisplay() {
     }
 }
 
+const closeMobileNav = () => {
+    const burger = document.querySelector(".burger");
+    const navMenu = document.querySelector(".mobileNavigation");
+    const mainContainer = document.querySelector(".main-container");
+    const options = document.querySelector(".options");
+
+    navMenu.classList.remove('mobileNavigationOpen');
+    mainContainer.classList.remove('mainContainerMoveDown');
+    burger.classList.remove('burgerClicked');
+    if (options) options.classList.add('optionsAdjust');
+}
+
 var slideIndex = 1;
 showSlides(slideIndex);
 

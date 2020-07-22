@@ -143,9 +143,8 @@ a {
   font-family: Helvetica Neue, Arial, sans-serif;
 }
 .level:hover {
-  box-shadow: inset 0px 0px 2px 1px #1b1b1b;
-  transform: scale(0.98);
-  transition: transform .1s ease-out;
+  box-shadow: inset 0px 0px 2px 5px #1b1b1b;
+  transition: box-shadow .1s ease-out;
   cursor: pointer;
 }
 
@@ -502,6 +501,9 @@ h2 {
   #sortOptions {
     margin-left: 0;
   }
+  #playButton {
+    margin-top: 1em;
+  }
   .levelTitle {
     display: block;
     text-align: center;
@@ -515,7 +517,7 @@ h2 {
   .unselectCardButton {
     width: 2.5em;
     left: 86%;
-    top: -3.5em;
+    top: -5.5em;
     position: relative;
   }
   #ratingContainer {

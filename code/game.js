@@ -45,6 +45,7 @@ function resetPlayer() {
 var player = new Player();
 
 function startGame(mode) {
+    closeMobileNav();
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
     canvas = document.getElementById("canvasId");
