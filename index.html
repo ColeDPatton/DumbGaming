@@ -49,36 +49,68 @@
         <button class="navigation" id="logging" onclick="location.href='/login'">Log In</button>
     </div>
 
+    <section class="topSection">
+        <div class="options optionsAdjust">
+            <h2>Welcome to my dumb game!</h2>
+            <p>Click "New Game" to start playing</p>
+            <div class="optionsCard">
+                <button class="myButton gameButton" id="newGame" onclick="startGame(1)">New Game</button>
+                <h3 class="cardDescription">Play the campaign! Learn the how to play and compete to get your name on
+                    the leaderboard!</h3>
+            </div>
+            <div class="optionsCard">
+                <button class="myButton gameButton" id="newHardcoreGame" onclick="startGame(2)">New Hardcore
+                    Game</button>
+                <h3 class="cardDescription">Play the campaign! Learn the how to play and compete to get your name on
+                    the leaderboard!</h3>
+            </div>
+            <div class="optionsCard">
+                <button class="myButton gameButton" id="communityPage" onclick="location.href='/community'">Community
+                    Levels</button>
+                <h3 class="cardDescription">Play levels created by other players!</h3>
+            </div>
+            <div class="optionsCard">
+                <button class="myButton gameButton" id="levelEditor" onclick="location.href='/creative'">Level
+                    Creator</button>
+                <h3 class="cardDescription">Create your own levels for other players to play!</h3>
+            </div>
+        </div>
+        <div class="slideshow-container hide_slideshow" id="slideshow-container">
+            <span class="slideshow-background"></span>
+            <div class="slides fade">
+                <img class="slide-images" src="image1.png" alt="game image">
+            </div>
+            <div class="slides fade">
+                <img class="slide-images" src="image2.png" alt="game image">
+            </div>
+            <div class="slides fade">
+                <img class="slide-images" src="image3.png" alt="game image">
+            </div>
+            <div class="slides fade">
+                <img class="slide-images" src="image4.png" alt="game image">
+            </div>
+            <!-- <a class="prev" onclick="plusSlides(-1)">&#10094;</a> -->
+            <!-- <a class="next" onclick="plusSlides(1)">&#10095;</a> -->
+            <br>
+            <div class="dots">
+                <img class="dot slide-images" src="image1.png" alt="game image" onclick="currentSlide(1)">
+                <img class="dot slide-images" src="image2.png" alt="game image" onclick="currentSlide(2)">
+                <img class="dot slide-images" src="image3.png" alt="game image" onclick="currentSlide(3)">
+                <img class="dot slide-images" src="image4.png" alt="game image" onclick="currentSlide(4)">
+                <!-- <span class="dot" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+                <span class="dot" onclick="currentSlide(3)"></span>
+                <span class="dot" onclick="currentSlide(4)"></span> -->
+            </div>
+        </div>
+    </section>
+
     <section class="main-container">
         <div class="gameDiv" id="gameDiv">
             <canvas class="canvas" id="canvasId"></canvas>
 
             <div class="slideshow-container hide_slideshow" id="slideshow-container">
-                <div class="slides fade">
-                    <img class="slide-images" src="image1.png" alt="game image">
-                    <div class="text">Learning how to play...</div>
-                </div>
-                <div class="slides fade">
-                    <img class="slide-images" src="image2.png" alt="game image">
-                    <div class="text">is simple.</div>
-                </div>
-                <div class="slides fade">
-                    <img class="slide-images" src="image3.png" alt="game image">
-                    <div class="text blackText">Learning how to win...</div>
-                </div>
-                <div class="slides fade">
-                    <img class="slide-images" src="image4.png" alt="game image">
-                    <div class="text blackText">is not.</div>
-                </div>
-                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                <a class="next" onclick="plusSlides(1)">&#10095;</a>
-                <br>
-                <div class="dots">
-                    <span class="dot" onclick="currentSlide(1)"></span>
-                    <span class="dot" onclick="currentSlide(2)"></span>
-                    <span class="dot" onclick="currentSlide(3)"></span>
-                    <span class="dot" onclick="currentSlide(4)"></span>
-                </div>
+                <img class="slide-images" src="image1.png" alt="game image">
             </div>
         </div>
         <div class="leaderboardWrapper">
@@ -138,58 +170,7 @@
             </div>
         </div>
     </section>
-    <section class="options optionsAdjust">
-        <div class="optionsRow">
-            <div class="optionsCard gameCard">
-                <div class="playGameCard">
-                    <div class="iconContainer">
-                        <img src="joystick.svg" class="icon" alt="icon">
-                    </div>
-                    <button class="myButton gameButton" id="playGame">New Game</button>
-                    <h3 class="cardDescription">Play the campaign! Learn the how to play and compete to get your name on
-                        the
-                        leaderboard!</h3>
-                </div>
-                <div class="newGameCard">
-                    <button class="myButton gameButton" id="newGame" onclick="startGame(1)">New Game</button>
-                    <button class="myButton gameButton" id="newHardcoreGame" onclick="startGame(2)">New Hardcore
-                        Game</button>
-                    <button class="myButton gameButton" id="playGameBack">Back</button>
-                </div>
-            </div>
-            <div class="optionsCard">
-                <div class="iconContainer">
-                    <img src="user.svg" class="icon" alt="icon">
-                </div>
-                <button class="myButton gameButton" id="communityPage" onclick="location.href='/community'">Community
-                    Levels</button>
-                <h3 class="cardDescription">Play levels created by other players!</h3>
-            </div>
-        </div>
-        <div class="optionsRow">
-            <div class="optionsCard">
-                <div class="iconContainer">
-                    <img src="hammer.svg" class="icon" alt="icon">
-                </div>
-                <button class="myButton gameButton" id="levelEditor" onclick="location.href='/creative'">Level
-                    Creator</button>
-                <h3 class="cardDescription">Create your own levels for other players to play!</h3>
-            </div>
-            <div class="optionsCard">
-                <div class="iconContainer">
-                    <img src="versus.svg" class="icon" alt="icon">
-                </div>
-                <button class="myButton gameButton" id="races">Races</button>
-                <h3 class="cardDescription">Think you've mastered the game? Challenge other players to see
-                    who's the fastest! <span style="color: #0bf593;">Races Coming Soon</span>
-                </h3>
-            </div>
-        </div>
-    </section>
-    <div class="iconCredit">
-        Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a
-            href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
-    </div>
+
     <footer>
         <div class="about-me footer-text">
             <div class="about-text">

@@ -179,12 +179,21 @@ li {
 
 * {box-sizing:border-box}
 
+.slideshow-background {
+  height: 112%;
+  width: 100%;
+  background-color: #45069B;
+  position: absolute;
+  z-index: -1;
+  left: -32px;
+  top: -24px;
+}
+
 .slideshow-container {
   width: 100%;
-  max-width: 900px;
-  margin: auto;
+  max-width: 700px;
+  margin: 0 8% 0 20%;
   position: relative;
-
 }
 
 .slides {
@@ -235,25 +244,23 @@ li {
 
 .dot {
   cursor: pointer;
-  height: 15px;
-  width: 15px;
-  margin: 0 2px;
-  background-color: #bbb;
-  border-radius: 50%;
-  display: inline-block;
-  transition: background-color 0.4s ease;
+  width: 23%;
+  filter: brightness(0.5);
+  /* opacity: 40%; */
+  transition: filter 0.4s ease;
 }
 
 .dots {
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
 }
 
 .dot:hover {
-  background-color: #717171;
+  filter: brightness(0.8);
 }
 
 .active {
-  background-color: #464646;
+  filter: brightness(1.0);
 }
 
 .fade {
@@ -264,13 +271,13 @@ li {
 }
 
 @-webkit-keyframes fade {
-  from {opacity: .4}
-  to {opacity: 1}
+  from {filter: brightness(0.5)}
+  to {filter: brightness(1.0)}
 }
 
 @keyframes fade {
-  from {opacity: .4}
-  to {opacity: 1}
+  from {filter: brightness(0.5)}
+  to {filter: brightness(1.0)}
 }
 
 .myButton {
@@ -365,11 +372,15 @@ h4 {
   margin-top: 3%;
 }
 
-.options {
-  /* background-color: #353535; */
+.topSection {
   display: flex;
-  text-align: center;
-  padding: 1% 0 0%;
+  margin-top: 5em;
+}
+
+.options {
+  min-width: 330px;
+  margin-left: 4%;
+  margin-top: -24px;
   color: lightgray;
   font-family: Helvetica Neue, Arial, sans-serif;
 }
@@ -381,11 +392,15 @@ h4 {
 
 .optionsCard {
   border-radius: 5px;
-  width: 45%;
-  margin: 1% auto;
+  width: 0;
   z-index: 5;
-  padding: 3% 4px 4px;
+  margin-top: 2em;
   background: #353535;
+}
+.optionsCard .myButton {
+  min-width: 225px;
+  height: 50px;
+  border: none;
 }
 .icon {
   width: 30%;
@@ -396,6 +411,7 @@ h4 {
   width: 100%;
 }
 .cardDescription {
+  display: none;
   font-size: 1em;
 }
 .iconCredit {
@@ -502,6 +518,24 @@ h2 {
   right: 0px;
 }
 
+@media only screen and (max-width: 1310px) {
+  .options p {
+    margin-top: 0;
+    margin-bottom: 2em;
+}
+  .slideshow-container {
+    margin: 0 4% 0 14%;
+  } 
+  .optionsCard {
+    margin-top: 1em;
+  }
+  .optionsCard .myButton {
+    min-width: 165px;
+    height: 40px;
+    font-size: .8em;
+  }
+}
+
 @media only screen and (max-width: 1200px) {
   header{
     max-height: 5em;
@@ -543,10 +577,7 @@ h2 {
   .main-container {
     padding: 4% 4% 0;
     display: block;
-    margin: -1em auto 2em;
-  }
-  .slideshow-container {
-    margin: auto;
+    margin: 10em auto 2em;
   }
   .leaderboardWrapper {
     margin: 0;
@@ -583,10 +614,6 @@ h2 {
   }
   .optionsRow {
     width: 100%;
-  }
-  .optionsCard {
-    margin: 1% auto;
-    padding-top: 2%;
   }
   .icon {
     width: 20%;
@@ -726,7 +753,6 @@ h2 {
   }
   .optionsCard {
     width: 69%;
-    margin: 3% auto 1%;
   }
   #playGameBack {
     margin-bottom: 2%;
