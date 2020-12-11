@@ -7,8 +7,8 @@ function loadHomeDisplay() {
 }
 
 function loadGameDisplay() {
-    document.getElementById("slideshow-container").style.position = "absolute";
-    TweenMax.to(".slideshow-container", 1, { scale: 1, top: 0, left: '-900', display: 'none' });
+    document.getElementById("game-placeholder").style.position = "absolute";
+    TweenMax.to("#game-placeholder", 1, { scale: 1, top: 0, left: '-900', display: 'none' });
     TweenMax.to(".canvas", 1, { position: 'relative', x: 0, right: 0, display: 'block' });
     TweenMax.from(".button-container", 1, { position: 'relative', top: 40 });
 

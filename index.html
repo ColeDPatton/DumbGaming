@@ -29,7 +29,7 @@
         <img src="DumbGamingLogo.svg" class="logo" onclick="homeScreen()" alt="Dumb Gaming logo">
 
         <div class="navigationBar">
-            <button class="navigation" onclick=" startGame(1)">New Game</button>
+            <button class="navigation" onclick="location.href='/'">Home</button>
             <button class="navigation" onclick="location.href='/community'">Community Levels</button>
             <button class="navigation" onclick="location.href='/creative'">Level Creator</button>
             <button class="navigation">Races</button>
@@ -53,26 +53,29 @@
         <div class="options optionsAdjust">
             <h2>Welcome to my dumb game!</h2>
             <p>Click "New Game" to start playing</p>
-            <div class="optionsCard">
-                <button class="myButton gameButton" id="newGame" onclick="startGame(1)">New Game</button>
-                <h3 class="cardDescription">Play the campaign! Learn the how to play and compete to get your name on
-                    the leaderboard!</h3>
-            </div>
-            <div class="optionsCard">
-                <button class="myButton gameButton" id="newHardcoreGame" onclick="startGame(2)">New Hardcore
-                    Game</button>
-                <h3 class="cardDescription">Play the campaign! Learn the how to play and compete to get your name on
-                    the leaderboard!</h3>
-            </div>
-            <div class="optionsCard">
-                <button class="myButton gameButton" id="communityPage" onclick="location.href='/community'">Community
-                    Levels</button>
-                <h3 class="cardDescription">Play levels created by other players!</h3>
-            </div>
-            <div class="optionsCard">
-                <button class="myButton gameButton" id="levelEditor" onclick="location.href='/creative'">Level
-                    Creator</button>
-                <h3 class="cardDescription">Create your own levels for other players to play!</h3>
+            <div class="optionButtons">
+                <div class="optionsCard">
+                    <button class="myButton gameButton" id="newGame" onclick="startGame(1)">New Game</button>
+                    <p class="cardDescription reveal">Play the campaign! Jump from block to block and reach the green
+                        square. As simple as a game can be.</p>
+                </div>
+                <div class="optionsCard">
+                    <button class="myButton gameButton" id="newHardcoreGame" onclick="startGame(2)">New Hardcore
+                        Game</button>
+                    <p class="cardDescription reveal">No hints. No help. No mercy. Race through the campaign for a
+                        chance to make it on the leaderboard!</p>
+                </div>
+                <div class="optionsCard">
+                    <button class="myButton gameButton" id="communityPage"
+                        onclick="location.href='/community'">Community
+                        Levels</button>
+                    <p class="cardDescription reveal">Play levels created by other players!</p>
+                </div>
+                <div class="optionsCard">
+                    <button class="myButton gameButton" id="levelEditor" onclick="location.href='/creative'">Level
+                        Creator</button>
+                    <p class="cardDescription reveal">Create your own levels for other players to play!</p>
+                </div>
             </div>
         </div>
         <div class="slideshow-container hide_slideshow" id="slideshow-container">
@@ -89,18 +92,25 @@
             <div class="slides fade">
                 <img class="slide-images" src="image4.png" alt="game image">
             </div>
+            <span class="slideshow-background2"></span>
+            <span class="slideshow-background3"></span>
+            <div class= "fillerImage">
+                <img class="slide-images" src="image3.png" alt="game image">
+            </div>
             <!-- <a class="prev" onclick="plusSlides(-1)">&#10094;</a> -->
             <!-- <a class="next" onclick="plusSlides(1)">&#10095;</a> -->
             <br>
             <div class="dots">
+                <span onclick="plusSlides(-1)">
+                    <a class="prev">&#10094;</a>
+                </span>
                 <img class="dot slide-images" src="image1.png" alt="game image" onclick="currentSlide(1)">
                 <img class="dot slide-images" src="image2.png" alt="game image" onclick="currentSlide(2)">
                 <img class="dot slide-images" src="image3.png" alt="game image" onclick="currentSlide(3)">
                 <img class="dot slide-images" src="image4.png" alt="game image" onclick="currentSlide(4)">
-                <!-- <span class="dot" onclick="currentSlide(1)"></span>
-                <span class="dot" onclick="currentSlide(2)"></span>
-                <span class="dot" onclick="currentSlide(3)"></span>
-                <span class="dot" onclick="currentSlide(4)"></span> -->
+                <span onclick="plusSlides(1)">
+                    <a class="next">&#10095;</a>
+                </span>
             </div>
         </div>
     </section>
@@ -108,23 +118,19 @@
     <section class="main-container">
         <div class="gameDiv" id="gameDiv">
             <canvas class="canvas" id="canvasId"></canvas>
-
-            <div class="slideshow-container hide_slideshow" id="slideshow-container">
+            <div class="slideshow-container hide_slideshow" id="game-placeholder">
+                <div>
+                    <h3>No game started. Click "Start Game" to play!</h3>
+                    <button class="myButton gameButton" id="newGame" onclick="startGame(1)">New Game</button>
+                </div>
                 <img class="slide-images" src="image1.png" alt="game image">
             </div>
         </div>
         <div class="leaderboardWrapper">
-            <div class="usernamePlaceholder">
-                <h3>Sign in to save progress</h3>
-            </div>
             <div class="leaderboard">
                 <h3>Hardcore leaderboard</h3>
                 <div class="records">
                     <ul class="recordsText" id="names">
-                        <li class="name">
-                            <p class="names" id="name">Name</p>
-                            <p class="times" id="time">Time</p>
-                        </li>
                         <li class="single-record">
                             <p class="names" id="p1"></p>
                             <p class="times" id="t1"></p>
@@ -172,6 +178,7 @@
     </section>
 
     <footer>
+        <span class="footer-line"></span>
         <div class="about-me footer-text">
             <div class="about-text">
                 <h2 class="footer-title">About Me</h2>
