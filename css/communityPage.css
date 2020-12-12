@@ -137,8 +137,8 @@ a {
 .level {
   display: flex;
   flex-direction: column;
-  width: 23%;
-  margin: 0 1% 2%;
+  width: 21%;
+  margin: 0 1% 5%;
   background-color: #0bf593;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
@@ -147,6 +147,20 @@ a {
 .level:hover {
   cursor: pointer;
 }
+.template {
+  width: 100%;
+  height: 55%;
+  padding-bottom: 4px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  display: inline-block;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
 .levelName {
   margin-top: 0;
   line-height: 1em;
@@ -155,6 +169,8 @@ a {
 }
 .textContainer {
   margin: auto 12px 12px;
+  opacity: 1;
+  transition: opacity .2s ease-out;
 }
 .rating {
   flex: 1.5;
@@ -172,6 +188,33 @@ a {
   line-height: 1em;
   font-weight: 400;
 }
+.level:hover .template {
+  height: 75%;
+  transition: height .5s ease-out;
+  object-fit: cover;
+}
+.level:not(:hover) .template {
+  -webkit-animation-name: reveal;
+  -webkit-animation-duration: .4s;
+  animation-name: reveal;
+  animation-duration: .4s;
+}
+@-webkit-keyframes reveal {
+  0% {height: 75%; object-fit: cover;}
+  99% {height: 55%; object-fit: cover;}
+  100% {object-fit: initial;}
+}
+
+@keyframes reveal {
+  0% {height: 75%; object-fit: cover;}
+  99% {height: 55%; object-fit: cover;}
+  100% {object-fit: initial;}
+}
+.level:hover .textContainer {
+  opacity: 0;
+  transition: opacity .2s ease-out;
+}
+
 
 * {box-sizing:border-box}
 
@@ -282,19 +325,6 @@ span:hover ~ span:before {
   font-size: .8em;
   height: 2.5em;
 }
-.template {
-  width: 100%;
-  padding-bottom: 4px;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-  display: inline-block;
-  user-select: none;
-  -moz-user-select: none;
-  -webkit-user-drag: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-}
-
 .level-templates::-webkit-scrollbar {
   width: 15px;
   height: 15px;
@@ -425,7 +455,6 @@ h2 {
   }
   .level {
     width: 29.33%;
-    margin: 0 2% 14%;
   }
   footer {
     padding-top: 2%;
@@ -560,13 +589,18 @@ h2 {
 
 @media only screen and (max-width: 600px) {
   .level {
-    width: 46%;
+    width: 44%;
+    margin: 0 2% 10%;
   }
 }
 
 @media only screen and (max-width: 400px) {
   footer {
     padding: 5%;
+  }
+  .level {
+    width: 44%;
+    margin: 0 2% 14%;
   }
 }
 
