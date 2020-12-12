@@ -156,17 +156,19 @@
             const levelTitle = document.createElement("div");
             const levelName = document.createElement("h2");
             const levelRating = document.createElement("h3");
+            const textContainer = document.createElement("div");
             const totalDeaths = document.createElement("h3");
             const timesBeaten = document.createElement("h3");
 
+            textContainer.classList.add("textContainer");
             levelTitle.classList.add("levelTitle");
             levelName.innerText = name;
             levelName.classList.add("levelName");
             levelRating.innerText = "Unrated";
-            levelRating.classList.add("details", "rating");
-            totalDeaths.innerText = "303 deaths caused";
+            levelRating.classList.add("rating");
+            totalDeaths.innerText = "Deaths caused: 303";
             totalDeaths.classList.add("details");
-            timesBeaten.innerText = "54 times beaten";
+            timesBeaten.innerText = "Times beaten: 49";
             timesBeaten.classList.add("details");
             card.classList.add("level");
             card.id = "cardId" + name;
@@ -226,12 +228,13 @@
                 }
             }
 
-            levelTitle.appendChild(levelName);
-            card.appendChild(levelTitle);
             card.appendChild(publicLevel);
-            card.appendChild(levelRating);
-            card.appendChild(totalDeaths);
-            card.appendChild(timesBeaten);
+            levelTitle.appendChild(levelName);
+            levelTitle.appendChild(levelRating);
+            card.appendChild(levelTitle);
+            textContainer.appendChild(totalDeaths);
+            textContainer.appendChild(timesBeaten);
+            card.appendChild(textContainer);
 
             return card;
         }
@@ -331,8 +334,10 @@
             });
             const card = document.getElementById("cardId" + data.id);
             for (let i = 0; i < card.children.length; i++) {
-                if (card.children.item(i).classList.contains("rating")) {
-                    card.children.item(i).innerText = "Rating " + Math.round((data.rating + Number.EPSILON) * 10) / 10;
+                const titleCard = card.children.item(i);
+                if (titleCard.classList.contains("levelTitle")) {
+                    const ratingCardIndex = titleCard.children.item(0).classList.contains("rating") ? 0 : 1;
+                    titleCard.children.item(ratingCardIndex).innerText = (Math.round((data.rating + Number.EPSILON) * 10) / 10) + "/5 Str";
                 }
             }
             loadBlocksIntoTemplateCanvas(lvl, "publicId" + data.id, data.rating);

@@ -135,29 +135,42 @@ a {
   display: none;
 }
 .level {
+  display: flex;
+  flex-direction: column;
   width: 23%;
   margin: 0 1% 2%;
-  padding: 1em;
   background-color: #0bf593;
-  border-radius: 1%;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
   font-family: Helvetica Neue, Arial, sans-serif;
 }
 .level:hover {
-  box-shadow: inset 0px 0px 2px 5px #1b1b1b;
-  transition: box-shadow .1s ease-out;
   cursor: pointer;
 }
-
-.level h2 {
+.levelName {
   margin-top: 0;
   line-height: 1em;
+  font-size: 18px;
+  flex: 2;
 }
-
+.textContainer {
+  margin: auto 12px 12px;
+}
+.rating {
+  flex: 1.5;
+  text-align: end;
+  width: 100%;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 0;
+  margin: 0;
+}
 .details {
   margin: 0;
-  padding: 0%;
+  padding: 0 0 2px;
   font-size: 1em;
-  font-weight: 500;
+  line-height: 1em;
+  font-weight: 400;
 }
 
 * {box-sizing:border-box}
@@ -179,8 +192,8 @@ a {
 }
 .levelTitle {
   display: flex;
-  align-items: center;
-  padding-bottom: .5em;
+  align-items: left;
+  padding: 6px 12px .7em;
 }
 .levelTitle .line1 {
   transform: translateY(8px) rotate(45deg);
@@ -215,6 +228,7 @@ a {
   padding: 20px 25px;
   width: 90%;
   margin: auto;
+  justify-content: space-between;
 }
 .gameDiv {
   padding-top: 2em;
@@ -270,8 +284,9 @@ span:hover ~ span:before {
 }
 .template {
   width: 100%;
-  padding-top: 0.7em;
-  padding-bottom: .4em;
+  padding-bottom: 4px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
   display: inline-block;
   user-select: none;
   -moz-user-select: none;
@@ -410,7 +425,7 @@ h2 {
   }
   .level {
     width: 29.33%;
-    margin: 0 2% 4%;
+    margin: 0 2% 14%;
   }
   footer {
     padding-top: 2%;
@@ -423,6 +438,10 @@ h2 {
 @media only screen and (max-width: 950px) {
   .level-container {
     width: 100%;
+  }
+  .details {
+    font-size: 12px;
+    font-weight: 400;
   }
   header {
     text-align: center;
@@ -504,12 +523,17 @@ h2 {
   #playButton {
     margin-top: 1em;
   }
+  .textContainer {
+    margin: auto 6px 6px;
+  }
   .levelTitle {
-    display: block;
-    text-align: center;
+    padding: 0 6px .7em;
   }
   .levelName {
     width: 100%;
+  }
+  .rating {
+    display: none;
   }
   .selectedCard .details {
     display: none;
@@ -543,5 +567,18 @@ h2 {
 @media only screen and (max-width: 400px) {
   footer {
     padding: 5%;
+  }
+}
+
+@media only screen and (min-width: 1800px) {
+  .levelName {
+    font-size: 2em;
+  }
+  .rating {
+    font-size: 2em;
+  }
+  .details {
+    font-size: 1.5em;
+    font-weight: 400;
   }
 }

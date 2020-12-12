@@ -396,29 +396,29 @@ function drawBlocksOntoTemplate(blockArray, templateId, public, rating) {
         }
     }
 
-    if (rating) {
-        for (let i = 0; i < rating; i++) {
-            const x = 110 * (i + 1) - 50;
-            const y = 10;
-            templatectx.beginPath();
-            templatectx.moveTo(x, 0.0 + y);
-            templatectx.lineTo(x + 17, 32 + y);
-            templatectx.lineTo(x + 50, 33 + y);
-            templatectx.lineTo(x + 28, 60 + y);
-            templatectx.lineTo(x + 40, 95 + y);
-            templatectx.lineTo(x, 75 + y);
-            templatectx.lineTo(x - 40, 95 + y);
-            templatectx.lineTo(x - 28, 60 + y);
-            templatectx.lineTo(x - 50, 33 + y);
-            templatectx.lineTo(x - 17, 32 + y);
-            templatectx.lineTo(x, 0 + y);
-            templatectx.closePath();
-            templatectx.lineWidth = 10;
-            templatectx.strokeStyle = 'black';
-            templatectx.stroke();
-            templatectx.fillStyle = "gold";
-            templatectx.fill();
-        }
-    }
+    // if (rating) {
+    //     for (let i = 0; i < rating; i++) {
+    //         const x = 110 * (i + 1) - 50;
+    //         const y = 10;
+    //         templatectx.beginPath();
+    //         templatectx.moveTo(x, 0.0 + y);
+    //         templatectx.lineTo(x + 17, 32 + y);
+    //         templatectx.lineTo(x + 50, 33 + y);
+    //         templatectx.lineTo(x + 28, 60 + y);
+    //         templatectx.lineTo(x + 40, 95 + y);
+    //         templatectx.lineTo(x, 75 + y);
+    //         templatectx.lineTo(x - 40, 95 + y);
+    //         templatectx.lineTo(x - 28, 60 + y);
+    //         templatectx.lineTo(x - 50, 33 + y);
+    //         templatectx.lineTo(x - 17, 32 + y);
+    //         templatectx.lineTo(x, 0 + y);
+    //         templatectx.closePath();
+    //         templatectx.lineWidth = 10;
+    //         templatectx.strokeStyle = 'black';
+    //         templatectx.stroke();
+    //         templatectx.fillStyle = "gold";
+    //         templatectx.fill();
+    //     }
+    // }
 }
 
