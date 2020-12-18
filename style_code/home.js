@@ -14,37 +14,37 @@ const navSlide = () => {
     });
 }
 
-const newGame = () => {
-    const newGameButton = document.querySelector("#playGame");
-    const newGameBackButton = document.querySelector("#playGameBack");
-    const playGameCard = document.querySelector(".playGameCard");
-    const newGameCard = document.querySelector(".newGameCard");
+// const newGame = () => {
+//     const newGameButton = document.querySelector("#playGame");
+//     const newGameBackButton = document.querySelector("#playGameBack");
+//     const playGameCard = document.querySelector(".playGameCard");
+//     const newGameCard = document.querySelector(".newGameCard");
 
-    newGameButton.addEventListener('click', () => {
-        playGameCard.classList.toggle('playGameCardOn');
-        newGameCard.classList.toggle('newGameCardOn');
-    });
-    newGameBackButton.addEventListener('click', () => {
-        playGameCard.classList.toggle('playGameCardOn');
-        newGameCard.classList.toggle('newGameCardOn');
-    });
-}
+//     newGameButton.addEventListener('click', () => {
+//         playGameCard.classList.toggle('playGameCardOn');
+//         newGameCard.classList.toggle('newGameCardOn');
+//     });
+//     newGameBackButton.addEventListener('click', () => {
+//         playGameCard.classList.toggle('playGameCardOn');
+//         newGameCard.classList.toggle('newGameCardOn');
+//     });
+// }
 
-const statsToggle = () => {
-    const statsToggle = document.querySelector(".stats-toggle");
-    const playerStats = document.querySelector(".playerStats");
+// const statsToggle = () => {
+//     const statsToggle = document.querySelector(".stats-toggle");
+//     const playerStats = document.querySelector(".playerStats");
 
-    if (statsToggle) {
-        statsToggle.addEventListener('click', () => {
-            playerStats.classList.toggle('showStats');
-        });
-    }
-}
+//     if (statsToggle) {
+//         statsToggle.addEventListener('click', () => {
+//             playerStats.classList.toggle('showStats');
+//         });
+//     }
+// }
 
 const loadHomescreenJS = () => {
     navSlide();
-    newGame();
-    statsToggle();
+    // newGame();
+    // statsToggle();
 }
 
 loadHomescreenJS();

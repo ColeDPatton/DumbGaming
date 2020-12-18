@@ -6,17 +6,32 @@ function loadHomeDisplay() {
     currentSlide(1);
 }
 
-function loadGameDisplay() {
-    document.getElementById("game-placeholder").style.position = "absolute";
-    TweenMax.to("#game-placeholder", 1, { scale: 1, top: 0, left: '-900', display: 'none' });
-    TweenMax.to(".canvas", 1, { position: 'relative', x: 0, right: 0, display: 'block' });
-    TweenMax.from(".button-container", 1, { position: 'relative', top: 40 });
+// function loadGameDisplay() {
+//     document.getElementById("game-placeholder").style.position = "absolute";
+//     TweenMax.to("#game-placeholder", 1, { scale: 1, top: 0, left: '-900', display: 'none' });
+//     TweenMax.to(".canvas", 1, { position: 'relative', x: 0, right: 0, display: 'block' });
+//     TweenMax.from(".button-container", 1, { position: 'relative', top: 40 });
 
-    var backButton = document.createElement("object");
-    if (window.location.href === "http://localhost:4000/" || window.location.href === "http://www.dumbgaming.com/" || window.location.href === "https://www.dumbgaming.com/")
-        backButton.innerHTML = '<button class="myButton gameButton" onclick="loadHomeDisplay()"/>Back';
-    else
-        backButton.innerHTML = '<button class="myButton gameButton" onclick="homeScreen()"/>Back';
+//     var backButton = document.createElement("object");
+//     if (window.location.href === "http://localhost:4000/" || window.location.href === "http://www.dumbgaming.com/" || window.location.href === "https://www.dumbgaming.com/")
+//         backButton.innerHTML = '<button class="myButton gameButton" onclick="loadHomeDisplay()"/>Back';
+//     else
+//         backButton.innerHTML = '<button class="myButton gameButton" onclick="homeScreen()"/>Back';
+// }
+
+function loadGameDisplay() {
+    document.getElementById("gameContainer").classList.add("showGameContainer");
+    document.getElementById("mainContainer").classList.add("hideMainContainer");
+    // TweenMax.to("#mainContainer", 1, { scale: 1, top: 0, left: '-900', display: 'none' });
+    // TweenMax.to("#mainContainer", 1, { left: '-900', padding: 0, display: 'none' });
+    // TweenMax.to("#gameContainer", 1, { position: 'relative', padding: '5em 10em', x: 0, right: 0, display: 'flex' });
+    // TweenMax.from(".button-container", 1, { position: 'relative', top: 40 });
+
+    // var backButton = document.createElement("object");
+    // if (window.location.href === "http://localhost:4000/" || window.location.href === "http://www.dumbgaming.com/" || window.location.href === "https://www.dumbgaming.com/")
+    //     backButton.innerHTML = '<button class="myButton gameButton" onclick="loadHomeDisplay()"/>Back';
+    // else
+    //     backButton.innerHTML = '<button class="myButton gameButton" onclick="homeScreen()"/>Back';
 }
 
 function loadLevelEditorDisplay() {

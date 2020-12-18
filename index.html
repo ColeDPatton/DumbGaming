@@ -48,135 +48,129 @@
         <button class="navigation">Races</button>
         <button class="navigation" id="logging" onclick="location.href='/login'">Log In</button>
     </div>
+    <div class="bodyContainer">
+        <section class="mainContainer" id="mainContainer">
+            <div class="options optionsAdjust">
+                <h2>Welcome to my dumb game!</h2>
+                <p>Click "New Game" to start playing</p>
+                <div class="optionButtons">
+                    <div class="optionsCard">
+                        <button class="myButton gameButton" id="newGame" onclick="startGame(1)">New Game</button>
+                        <p class="cardDescription reveal">Play the campaign! Jump from block to block and reach the
+                            green
+                            square. As simple as a game can be.</p>
+                    </div>
+                    <div class="optionsCard">
+                        <button class="myButton gameButton" id="newHardcoreGame" onclick="startGame(2)">New Hardcore
+                            Game</button>
+                        <p class="cardDescription reveal">No hints. No help. No mercy. Race through the campaign for a
+                            chance to make it on the leaderboard!</p>
+                    </div>
+                    <div class="optionsCard">
+                        <button class="myButton gameButton" id="communityPage"
+                            onclick="location.href='/community'">Community
+                            Levels</button>
+                        <p class="cardDescription reveal">Play levels created by other players!</p>
+                    </div>
+                    <div class="optionsCard">
+                        <button class="myButton gameButton" id="levelEditor" onclick="location.href='/creative'">Level
+                            Creator</button>
+                        <p class="cardDescription reveal">Create your own levels for other players to play!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slideshow-container hide_slideshow" id="slideshow-container">
+                <span class="slideshow-background"></span>
+                <div class="slides fade">
+                    <img class="slide-images" src="image1.png" alt="game image">
+                </div>
+                <div class="slides fade">
+                    <img class="slide-images" src="image2.png" alt="game image">
+                </div>
+                <div class="slides fade">
+                    <img class="slide-images" src="image3.png" alt="game image">
+                </div>
+                <div class="slides fade">
+                    <img class="slide-images" src="image4.png" alt="game image">
+                </div>
+                <span class="slideshow-background2"></span>
+                <span class="slideshow-background3"></span>
+                <div class="fillerImage">
+                    <img class="slide-images" src="image3.png" alt="game image">
+                </div>
+                <!-- <a class="prev" onclick="plusSlides(-1)">&#10094;</a> -->
+                <!-- <a class="next" onclick="plusSlides(1)">&#10095;</a> -->
+                <br>
+                <div class="dots">
+                    <span onclick="plusSlides(-1)">
+                        <a class="prev">&#10094;</a>
+                    </span>
+                    <img class="dot slide-images" src="image1.png" alt="game image" onclick="currentSlide(1)">
+                    <img class="dot slide-images" src="image2.png" alt="game image" onclick="currentSlide(2)">
+                    <img class="dot slide-images" src="image3.png" alt="game image" onclick="currentSlide(3)">
+                    <img class="dot slide-images" src="image4.png" alt="game image" onclick="currentSlide(4)">
+                    <span onclick="plusSlides(1)">
+                        <a class="next">&#10095;</a>
+                    </span>
+                </div>
+            </div>
+        </section>
 
-    <section class="topSection">
-        <div class="options optionsAdjust">
-            <h2>Welcome to my dumb game!</h2>
-            <p>Click "New Game" to start playing</p>
-            <div class="optionButtons">
-                <div class="optionsCard">
-                    <button class="myButton gameButton" id="newGame" onclick="startGame(1)">New Game</button>
-                    <p class="cardDescription reveal">Play the campaign! Jump from block to block and reach the green
-                        square. As simple as a game can be.</p>
-                </div>
-                <div class="optionsCard">
-                    <button class="myButton gameButton" id="newHardcoreGame" onclick="startGame(2)">New Hardcore
-                        Game</button>
-                    <p class="cardDescription reveal">No hints. No help. No mercy. Race through the campaign for a
-                        chance to make it on the leaderboard!</p>
-                </div>
-                <div class="optionsCard">
-                    <button class="myButton gameButton" id="communityPage"
-                        onclick="location.href='/community'">Community
-                        Levels</button>
-                    <p class="cardDescription reveal">Play levels created by other players!</p>
-                </div>
-                <div class="optionsCard">
-                    <button class="myButton gameButton" id="levelEditor" onclick="location.href='/creative'">Level
-                        Creator</button>
-                    <p class="cardDescription reveal">Create your own levels for other players to play!</p>
-                </div>
+        <section class="gameContainer" id="gameContainer">
+            <div class="gameDiv" id="gameDiv">
+                <canvas class="canvas" id="canvasId"></canvas>
             </div>
-        </div>
-        <div class="slideshow-container hide_slideshow" id="slideshow-container">
-            <span class="slideshow-background"></span>
-            <div class="slides fade">
-                <img class="slide-images" src="image1.png" alt="game image">
-            </div>
-            <div class="slides fade">
-                <img class="slide-images" src="image2.png" alt="game image">
-            </div>
-            <div class="slides fade">
-                <img class="slide-images" src="image3.png" alt="game image">
-            </div>
-            <div class="slides fade">
-                <img class="slide-images" src="image4.png" alt="game image">
-            </div>
-            <span class="slideshow-background2"></span>
-            <span class="slideshow-background3"></span>
-            <div class= "fillerImage">
-                <img class="slide-images" src="image3.png" alt="game image">
-            </div>
-            <!-- <a class="prev" onclick="plusSlides(-1)">&#10094;</a> -->
-            <!-- <a class="next" onclick="plusSlides(1)">&#10095;</a> -->
-            <br>
-            <div class="dots">
-                <span onclick="plusSlides(-1)">
-                    <a class="prev">&#10094;</a>
-                </span>
-                <img class="dot slide-images" src="image1.png" alt="game image" onclick="currentSlide(1)">
-                <img class="dot slide-images" src="image2.png" alt="game image" onclick="currentSlide(2)">
-                <img class="dot slide-images" src="image3.png" alt="game image" onclick="currentSlide(3)">
-                <img class="dot slide-images" src="image4.png" alt="game image" onclick="currentSlide(4)">
-                <span onclick="plusSlides(1)">
-                    <a class="next">&#10095;</a>
-                </span>
-            </div>
-        </div>
-    </section>
-
-    <section class="main-container">
-        <div class="gameDiv" id="gameDiv">
-            <canvas class="canvas" id="canvasId"></canvas>
-            <div class="slideshow-container hide_slideshow" id="game-placeholder">
-                <div>
-                    <h3>No game started. Click "Start Game" to play!</h3>
-                    <button class="myButton gameButton" id="newGame" onclick="startGame(1)">New Game</button>
-                </div>
-                <img class="slide-images" src="image1.png" alt="game image">
-            </div>
-        </div>
-        <div class="leaderboardWrapper">
-            <div class="leaderboard">
-                <h3>Hardcore leaderboard</h3>
-                <div class="records">
-                    <ul class="recordsText" id="names">
-                        <li class="single-record">
-                            <p class="names" id="p1"></p>
-                            <p class="times" id="t1"></p>
-                        </li>
-                        <li class="single-record">
-                            <p class="names" id="p2"></p>
-                            <p class="times" id="t2"></p>
-                        </li>
-                        <li class="single-record">
-                            <p class="names" id="p3"></p>
-                            <p class="times" id="t3"></p>
-                        </li>
-                        <li class="single-record">
-                            <p class="names" id="p4"></p>
-                            <p class="times" id="t4"></p>
-                        </li>
-                        <li class="single-record">
-                            <p class="names" id="p5"></p>
-                            <p class="times" id="t5"></p>
-                        </li>
-                        <li class="single-record">
-                            <p class="names" id="p6"></p>
-                            <p class="times" id="t6"></p>
-                        </li>
-                        <li class="single-record">
-                            <p class="names" id="p7"></p>
-                            <p class="times" id="t7"></p>
-                        </li>
-                        <li class="single-record">
-                            <p class="names" id="p8"></p>
-                            <p class="times" id="t8"></p>
-                        </li>
-                        <li class="single-record">
-                            <p class="names" id="p9"></p>
-                            <p class="times" id="t9"></p>
-                        </li>
-                        <li class="single-record">
-                            <p class="names" id="p10"></p>
-                            <p class="times" id="t10"></p>
-                        </li>
-                    </ul>
+            <div class="leaderboardWrapper">
+                <div class="leaderboard">
+                    <h3>Hardcore leaderboard</h3>
+                    <div class="records">
+                        <ul class="recordsText" id="names">
+                            <li class="single-record">
+                                <p class="names" id="p1"></p>
+                                <p class="times" id="t1"></p>
+                            </li>
+                            <li class="single-record">
+                                <p class="names" id="p2"></p>
+                                <p class="times" id="t2"></p>
+                            </li>
+                            <li class="single-record">
+                                <p class="names" id="p3"></p>
+                                <p class="times" id="t3"></p>
+                            </li>
+                            <li class="single-record">
+                                <p class="names" id="p4"></p>
+                                <p class="times" id="t4"></p>
+                            </li>
+                            <li class="single-record">
+                                <p class="names" id="p5"></p>
+                                <p class="times" id="t5"></p>
+                            </li>
+                            <li class="single-record">
+                                <p class="names" id="p6"></p>
+                                <p class="times" id="t6"></p>
+                            </li>
+                            <li class="single-record">
+                                <p class="names" id="p7"></p>
+                                <p class="times" id="t7"></p>
+                            </li>
+                            <li class="single-record">
+                                <p class="names" id="p8"></p>
+                                <p class="times" id="t8"></p>
+                            </li>
+                            <li class="single-record">
+                                <p class="names" id="p9"></p>
+                                <p class="times" id="t9"></p>
+                            </li>
+                            <li class="single-record">
+                                <p class="names" id="p10"></p>
+                                <p class="times" id="t10"></p>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
-
+        </section>
+    </div>
     <footer>
         <span class="footer-line"></span>
         <div class="about-me footer-text">
