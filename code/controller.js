@@ -1,8 +1,8 @@
 document.addEventListener("keydown", move);
 document.addEventListener("keyup", stop);
-document.addEventListener('touchstart', mobileMove, {passive: false});
-document.addEventListener('touchend', mobileStop, {passive: false});
-document.addEventListener('touchmove', mobileDrag, {passive: false});
+document.addEventListener('touchstart', mobileMove, { passive: false });
+document.addEventListener('touchend', mobileStop, { passive: false });
+document.addEventListener('touchmove', mobileDrag, { passive: false });
 
 var x;
 var y;
@@ -24,14 +24,7 @@ var wantToJumpTimer = 0;
 var lastEvent = null;
 function move(event) {
     if (gameStarted) {
-        if (level === 1 && instructed === 0 && gameMode === 1) {
-            alert("I'm here to help.");
-            alert("I'll only instruct you once.");
-            alert("Use the left and right arrow keys to move.");
-            alert("And use the space bar to jump.");
-            alert("Now get to the green square.");
-            instructed = 1;
-        } else if (event.keyCode === 37 || event.keyCode === 65) {
+        if (event.keyCode === 37 || event.keyCode === 65) {
             moveLeft();
         } else if (event.keyCode === 39 || event.keyCode === 68) {
             moveRight();
@@ -63,7 +56,7 @@ function mobileMove(event) {
             if (clickedY >= -10 && clickedY <= 510) {
                 event.preventDefault();
                 if (level === 1 && instructed === 0 && gameMode === 1) {
-                    alert("I'm here to help.");
+                    setDesiredMessage("I'm here to help.");
                     alert("I'll only instruct you once.");
                     alert("Touch the bottom left or bottom right to move.");
                     alert("Tap anywhere else to jump.");

@@ -106,6 +106,15 @@ var ctx = canvas.getContext("2d");
 const buttonText = ["Bouncy", "Invisible", "Ghost", "Horizontal", "Vertical", "Circular", "Rotatal"];
 const buttonTextOffset = [15, 14, 22, 3, 15, 12, 15];
 
+var desiredMessage = "";
+function setDesiredMessage(newDesiredMessage) {
+    desiredMessage = newDesiredMessage;
+}
+var message = "";
+function setMessage(newMessage) {
+    message = newMessage;
+}
+
 function drawBlocks() {
     var canvas = document.getElementById("canvasId");
     var ctx = canvas.getContext("2d");
@@ -178,9 +187,30 @@ function clearBackground() {
     if (gameMode > 0) {
         ctx.font = "20px Georgia";
         ctx.fillStyle = "#000000";
-        if (level != 110 && level != 100)
+        if (level != 110 && level != 100 && message !== "") {
+            ctx.fillText(message, 10, 50);
+        } else if (level != 110 && level != 100 && message === "") {
+            // ctx.fillText("Amount of times you've failed: " + deathCount, 10, 50);
+            // setDesiredMessage("Amount of times you've failed: " + deathCount, 10, 50);
+        } else if (level === 110) {
+            // ctx.fillText("Amount of times you've failed: 0", 10, 50);
+            // setDesiredMessage("Amount of times you've failed: 0", 10, 50);
+            ctx.font = "60px Georgia";
+            ctx.fillText("THE END.", 100, 300);
+        } else {
+            // ctx.fillText("Amount of times you've failed: " + deathCount, 10, 50);
+            // setDesiredMessage("Amount of times you've failed: " + deathCount, 10, 50);
+            ctx.font = "60px Georgia";
+            ctx.fillText("FAILURE.", 100, 250);
+
+            ctx.fillText("THE END.", 100, 300);
+        }
+    } else if (gameMode > 1) {
+        ctx.font = "20px Georgia";
+        ctx.fillStyle = "#000000";
+        if (level != 110 && level != 100) {
             ctx.fillText("Amount of times you've failed: " + deathCount, 10, 50);
-        else if (level === 110) {
+        } else if (level === 110) {
             ctx.fillText("Amount of times you've failed: 0", 10, 50);
             ctx.font = "60px Georgia";
             ctx.fillText("THE END.", 100, 300);

@@ -88,6 +88,7 @@ function loadTheGame() {
     loadGameDisplay();
 
     resetPlayer();
+    setMessage("click anywhere to get started");
     highlightedBlock = null;
     gameStarted = true;
 }
@@ -175,11 +176,65 @@ function speedAdjustment() {
     return 0;
 }
 
+var currentMessageIndex = 0;
+var messageTimer = 0;
+var currentMessage = "";
+var turnLevelOneGoalInvisible = true;
+var currentLevel = 1;
 var update = setInterval(function () {
     if (gameStarted) {
+        if (gameMode === 1) {
+            if (level === 1) {
+                if (turnLevelOneGoalInvisible && blocks.length === 8) {
+                    blocks[7].invisible = 1;
+                    turnLevelOneGoalInvisible = false;
+                } else if (!turnLevelOneGoalInvisible && instructed === 6) {
+                    blocks[7].invisible = 0;
+                }
+            }
+
+            getMessages();
+
+            if (desiredMessage !== "") {
+                if (currentMessage !== desiredMessage) {
+                    if (currentMessage.slice(0, 12) === desiredMessage.slice(0, 12)) {
+                        setMessage(desiredMessage);
+                        setDesiredMessage("");
+                        messageTimer = 1000;
+                        currentMessageIndex = 1000;
+                    } else if (desiredMessage.slice(0, 3) === "Amo" && currentMessage.length > 1) {
+                        setDesiredMessage(currentMessage);
+                    } else {
+                        currentMessage = desiredMessage;
+                        messageTimer = 0;
+                        currentMessageIndex = 0;
+                        currentLevel = level;
+                    }
+                }
+
+                messageTimer++
+                currentMessageIndex++;
+
+                if (currentMessageIndex <= desiredMessage.length) {
+                    setMessage(desiredMessage.slice(0, currentMessageIndex));
+                } else if ((message.slice(0, 3) !== "Amo") && messageTimer > (2 * Math.max(desiredMessage.length, 10))) {
+                    messageTimer = 0;
+                    currentMessage = "";
+                    currentMessageIndex = 0;
+                    setDesiredMessage("");
+                    setMessage("");
+                    if (currentLevel === level)
+                        instructed++;
+
+                }
+            } else if (message === "") {
+                setDesiredMessage("Amount of times you've failed: " + deathCount);
+            }
+        }
+
         if ((wantToJump || holdingJump) && player.yVel === 0) {
             jump();
-        } else if (wantToJump && wantToJumpTimer > 0){
+        } else if (wantToJump && wantToJumpTimer > 0) {
             wantToJumpTimer--;
         } else {
             wantToJump = false;
@@ -240,24 +295,18 @@ function deathCheck() {
         player.yPos <= -100 || player.yPos >= 400) {
         if (gameMode === 1) {
             if (deathCount === 4) {
-                alert("That was your fifth failure.");
-                alert("Maybe it's time to consider giving up.");
+                deathMessages[0] = 1;
+            } else if (deathCount === 19) {
+                deathMessages[1] = 1;
+            } else if (deathCount === 49) {
+                deathMessages[2] = 1;
+            } else if (deathCount === 100) {
+                deathMessages[3] = 1;
             }
             if (level === 4 && instructed === 0) {
-                alert("Hey.");
-                alert("Don't try to jump on that block.");
-                alert("There's two fake blocks on this map.");
                 instructed = 1;
-            } else if (level === 7 && player.xPos > 200 && player.xPos < 325 && instructed === 1) {
-                alert("*sigh*");
-                alert("Everyone else made the jump.");
-                alert("Go ahead, try again.");
+            } else if (level === 7 && player.xPos > 200 && player.xPos < 325 && instructed === 2) {
                 blocks.push(new Shape(200, 350, 125, -10, 0, 1, 0, 0));
-                instructed = 2;
-            } else if (level === 7 && player.xPos > 395 && player.xPos < 485 && instructed === 2) {
-                alert("Life sucks doesn't it.");
-                alert("Click 'q' to quit.");
-                blocks.splice(5, 1);
                 instructed = 3;
             }
         }
@@ -274,31 +323,20 @@ function deathCheck() {
                     player.xPos < (oRec.x + oRec.w)) {
                     if (gameMode === 1) {
                         if (level === 5 && instructed === 0) {
-                            alert("Wow. Good job.");
-                            alert("Let's go touch the red block.");
-                            alert("That's always a good idea.");
-                            alert("Red blocks kill you.");
                             instructed = 1;
-                        } if (level === 7 && instructed === 0 &&
+                        } if (level === 9 && instructed === 0 &&
                             player.xPos > 90 && player.xPos < 200 && (player.yPos + player.height) < oRec.y) {
-                            alert("Oh woooow.");
-                            alert("Those yellow ones are bouncy.")
-                            alert("I totally would have warned you if I knew that.");
                             instructed = 1;
                         }
 
                         if (deathCount === 4) {
-                            alert("That was your fifth failure.");
-                            alert("Maybe it's time to consider giving up.");
+                            deathMessages[0] = 1;
                         } else if (deathCount === 19) {
-                            alert("20 Deaths?!");
-                            alert("Do you enjoy being a disappointment?");
+                            deathMessages[1] = 1;
                         } else if (deathCount === 49) {
-                            alert("THE BIG FIVE-O!!");
-                            alert("This would be quite the accomplishment!...");
-                            alert("If that number wasn't measuring your failures.");
-                        } else if (deathCount === 74) {
-                            alert("*sigh*");
+                            deathMessages[2] = 1;
+                        } else if (deathCount === 100) {
+                            deathMessages[3] = 1;
                         }
                     }
                     die();
@@ -312,6 +350,7 @@ function deathCheck() {
 
 function die() {
     deathCount++;
+    setDesiredMessage("Amount of times you've failed: " + deathCount);
     player.xPos = 20;
     player.yPos = 300;
     if (level === 11)
@@ -405,37 +444,11 @@ function collisionDetectionY() {
                 if ((player.xPos + player.width) > oRec.x && player.xPos < (oRec.x + oRec.w)) {
                     if (gameMode === 1) {
                         if (level === 3 && player.xPos >= 50 && instructed === 0) {
-                            alert("...");
-                            alert("There's an invisible ledge you can jump on after the third block.");
-                            alert("Don't tell anyone I told you that.");
                             instructed = 1;
-                            player.movingLeft = false;
-                            player.movingRight = false;
-                            player.xVel = 0;
                         } else if (level === 7 && player.xPos >= 50 && instructed === 0) {
-                            alert("You could make the jump.");
                             instructed = 1;
-                            player.movingLeft = false;
-                            player.movingRight = false;
-                            player.xVel = 0;
                         } else if (level === 8 && player.xPos >= 50 && instructed === 0) {
-                            alert("There's nothing behind you.");
-                            alert("Except your long history of failures.");
                             instructed = 1;
-                            player.movingLeft = false;
-                            player.movingRight = false;
-                            player.xVel = 0;
-                        } else if (level === 8 && instructed === 0 &&
-                            player.xPos >= 620 && player.xPos <= 660 &&
-                            player.yPos >= 175 && player.yPos <= 185) {
-                            alert("Alright, here's the deal...");
-                            alert("Don't go down those steps.");
-                            alert("Go to the square block directly above where you started and jump.");
-                            alert("Or you can just go down those steps.");
-                            instructed = 1;
-                            player.movingLeft = false;
-                            player.movingRight = false;
-                            player.xVel = 0;
                         }
                     }
                     player.jumpPower = oRec.bouncy ? -25 : -12;
@@ -465,4 +478,183 @@ function collisionDetectionY() {
         }
     }
     return -2;
+}
+
+var deathMessages = new Array(10);
+deathMessages.fill(0);
+var sent = 0;
+function getMessages() {
+    if (level === 1 && instructed >= 0 && instructed < 6) {
+        if (instructed === 0) {
+            setDesiredMessage("click anywhere to get started");
+        } else if (instructed === 1) {
+            setDesiredMessage("I'm here to help.");
+        } else if (instructed === 2) {
+            setDesiredMessage("I'll only instruct you once.");
+        } else if (instructed === 3) {
+            setDesiredMessage("Use the left and right arrow keys to move.");
+        } else if (instructed === 4) {
+            setDesiredMessage("And use the space bar to jump.");
+        } else if (instructed === 5) {
+            setDesiredMessage("Now get to the green square.");
+        }
+    } else if (level === 3 && instructed > 0 && instructed < 4) {
+        if (instructed === 1) {
+            setDesiredMessage("...");
+        } else if (instructed === 2) {
+            setDesiredMessage("There's an invisible ledge you can jump on after the third block.");
+        } else if (instructed === 3) {
+            setDesiredMessage("Don't tell anyone I told you that.");
+        }
+    } else if (level === 4 && instructed > 0 && instructed < 4) {
+        if (instructed === 1) {
+            setDesiredMessage("Hey.");
+        } else if (instructed === 2) {
+            setDesiredMessage("Don't try to jump on that block.");
+        } else if (instructed === 3) {
+            setDesiredMessage("There's two fake blocks on this map.");
+        }
+    } else if (level === 5 && instructed > 0 && instructed < 5) {
+        if (instructed === 1) {
+            setDesiredMessage("Wow. Good job.");
+        } else if (instructed === 2) {
+            setDesiredMessage("\"Let's go touch the red block.\"");
+        } else if (instructed === 3) {
+            setDesiredMessage("\"That's always a good idea.\"");
+        } else if (instructed === 4) {
+            setDesiredMessage("Red blocks kill you.");
+        }
+    } else if (level === 7 && instructed > 0 && instructed < 6) {
+        if (instructed === 1) {
+            setDesiredMessage("You could make the jump.");
+        } else if (instructed === 3) {
+            setDesiredMessage("*sigh*");
+        } else if (instructed === 4) {
+            setDesiredMessage("Everyone else made the jump.");
+        } else if (instructed === 5) {
+            setDesiredMessage("Go ahead, try again.");
+        }
+    } else if (level === 8 && instructed > 0 && instructed < 3) {
+        if (instructed === 1) {
+            setDesiredMessage("There's nothing behind you.");
+        } else if (instructed === 2) {
+            setDesiredMessage("Except your long history of failures.");
+        }
+    } else if (level === 9 && instructed > 0 && instructed < 4) {
+        if (instructed === 1) {
+            setDesiredMessage("Oh woooow.");
+        } else if (instructed === 2) {
+            setDesiredMessage("Those yellow ones are bouncy.");
+        } else if (instructed === 3) {
+            setDesiredMessage("I totally would have warned you if I knew that.");
+        }
+    } else if (deathMessages[0]) {
+        if (deathMessages[0] === 1) {
+            if (!sent) {
+                setDesiredMessage("That was your fifth failure.");
+                sent = 1;
+            }
+            if (desiredMessage === "") {
+                deathMessages[0]++;
+                instructed--;
+                sent = 0;
+            }
+        } else if (deathMessages[0] === 2) {
+            if (!sent) {
+                setDesiredMessage("Maybe it's time to consider giving up.");
+                sent = 1;
+            }
+            if (desiredMessage === "") {
+                deathMessages[0] = 0;
+                instructed--;
+                sent = 0;
+            }
+        }
+    } else if (deathMessages[1]) {
+        if (deathMessages[1] === 1) {
+            if (!sent) {
+                setDesiredMessage("20 Deaths?!");
+                sent = 1;
+            }
+            if (desiredMessage === "") {
+                deathMessages[1]++;
+                instructed--;
+                sent = 0;
+            }
+        } else if (deathMessages[1] === 2) {
+            if (!sent) {
+                setDesiredMessage("Do you enjoy being a disappointment?");
+                sent = 1;
+            }
+            if (desiredMessage === "") {
+                deathMessages[1] = 0;
+                instructed--;
+                sent = 0;
+            }
+        }
+    } else if (deathMessages[2]) {
+        if (deathMessages[2] === 1) {
+            if (!sent) {
+                setDesiredMessage("THE BIG FIVE-O!!");
+                sent = 1;
+            }
+            if (desiredMessage === "") {
+                deathMessages[2]++;
+                instructed--;
+                sent = 0;
+            }
+        } else if (deathMessages[2] === 2) {
+            if (!sent) {
+                setDesiredMessage("This would be quite the accomplishment!...");
+                sent = 1;
+            }
+            if (desiredMessage === "") {
+                deathMessages[2] = 3;
+                instructed--;
+                sent = 0;
+            }
+        } else if (deathMessages[2] === 3) {
+            if (!sent) {
+                setDesiredMessage("If that number wasn't measuring your failures.");
+                sent = 1;
+            }
+            if (desiredMessage === "") {
+                deathMessages[2] = 0;
+                instructed--;
+                sent = 0;
+            }
+        }
+    } else if (deathMessages[3]) {
+        if (deathMessages[3] === 1) {
+            if (!sent) {
+                setDesiredMessage("To fail 100 times and keep going...");
+                sent = 1;
+            }
+            if (desiredMessage === "") {
+                deathMessages[3]++;
+                instructed--;
+                sent = 0;
+            }
+        } else if (deathMessages[3] === 2) {
+            if (!sent) {
+                setDesiredMessage("I'll be honest. I'm actually kind of proud of you!");
+                sent = 1;
+            }
+            if (desiredMessage === "") {
+                deathMessages[3]++;
+                instructed--;
+                sent = 0;
+            }
+        } else if (deathMessages[3] === 3) {
+            if (!sent) {
+                setDesiredMessage("You might not be talented. Or Skilled. Or good a this...");
+                sent = 1;
+            }
+            if (desiredMessage === "") {
+                deathMessages[3] = 0;
+                instructed--;
+                sent = 0;
+            }
+        }
+    }
 }
