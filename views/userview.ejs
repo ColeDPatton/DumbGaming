@@ -24,7 +24,7 @@
     <title>Dumb Gaming</title>
 </head>
 
-<body class="no_select" id="body">
+<!-- <body class="no_select" id="body">
     <header>
         <img src="DumbGamingLogo.svg" class="logo" onclick="homeScreen()" alt="Dumb Gaming logo">
 
@@ -223,7 +223,185 @@
                 </p>
             </div>
         </div>
+    </footer> -->
+
+<body class="no_select" id="body">
+    <header>
+        <img src="DumbGamingLogo.svg" class="logo" onclick="homeScreen()" alt="Dumb Gaming logo">
+
+        <div class="navigationBar">
+            <button class="navigation" onclick="location.href='/'">Home</button>
+            <button class="navigation" onclick="location.href='/community'">Community Levels</button>
+            <button class="navigation" onclick="location.href='/creative'">Level Creator</button>
+            <button class="navigation">Races</button>
+            <button class="navigation" id="logging" onclick="location.href='/login'">Log In</button>
+        </div>
+        <div class="burger">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
+        </div>
+    </header>
+    <div class="mobileNavigation">
+        <button class="navigation" onclick="location.href='/'">Home</button>
+        <button class="navigation" onclick="location.href='/community'">Community Levels</button>
+        <button class="navigation" onclick="location.href='/creative'">Level Creator</button>
+        <button class="navigation">Races</button>
+        <button class="navigation" id="logging" onclick="location.href='/login'">Log In</button>
+    </div>
+    <div class="bodyContainer">
+        <section class="mainContainer" id="mainContainer">
+            <div class="options optionsAdjust">
+                <h2>Welcome, <%=username%>
+                </h2>
+                <p>Click "New Game" to start playing, or click "Hardcore" to prove your skill and have a chance at 
+                    making it on the leaderboard</p>
+                <div class="optionButtons">
+                    <div class="optionsCard">
+                        <span class="optionsCardBackground"></span>
+                        <button class="myButton gameButton" id="newGame" onclick="startGame(1)">New Game</button>
+                        <p class="cardDescription reveal">Play the campaign! Jump from block to block and reach the
+                            green
+                            square. As simple as a game can be.</p>
+                    </div>
+                    <div class="optionsCard">
+                        <span class="optionsCardBackground"></span>
+                        <button class="myButton gameButton" id="newHardcoreGame" onclick="startGame(2)">New Hardcore
+                            Game</button>
+                        <p class="cardDescription reveal">No hints. No help. No mercy. Race through the campaign for a
+                            chance to make it on the leaderboard!</p>
+                    </div>
+                    <div class="optionsCard">
+                        <span class="optionsCardBackground"></span>
+                        <button class="myButton gameButton" id="communityPage"
+                            onclick="location.href='/community'">Community
+                            Levels</button>
+                        <p class="cardDescription reveal">Play levels created by other players!</p>
+                    </div>
+                    <div class="optionsCard">
+                        <span class="optionsCardBackground"></span>
+                        <button class="myButton gameButton" id="levelEditor" onclick="location.href='/creative'">Level
+                            Creator</button>
+                        <p class="cardDescription reveal">Create your own levels for other players to play!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slideshow-container hide_slideshow" id="slideshow-container">
+                <span class="slideshow-background"></span>
+                <div class="slides fade">
+                    <img class="slide-images" src="image1.png" alt="game image">
+                </div>
+                <div class="slides fade">
+                    <img class="slide-images" src="image2.png" alt="game image">
+                </div>
+                <div class="slides fade">
+                    <img class="slide-images" src="image3.png" alt="game image">
+                </div>
+                <div class="slides fade">
+                    <img class="slide-images" src="image4.png" alt="game image">
+                </div>
+                <span class="slideshow-background2"></span>
+                <span class="slideshow-background3"></span>
+                <div class="fillerImage">
+                    <img class="slide-images" src="image3.png" alt="game image">
+                </div>
+                <br>
+                <div class="dots">
+                    <span onclick="plusSlides(-1)">
+                        <a class="prev">&#10094;</a>
+                    </span>
+                    <img class="dot slide-images" src="image1.png" alt="game image" onclick="currentSlide(1)">
+                    <img class="dot slide-images" src="image2.png" alt="game image" onclick="currentSlide(2)">
+                    <img class="dot slide-images" src="image3.png" alt="game image" onclick="currentSlide(3)">
+                    <img class="dot slide-images" src="image4.png" alt="game image" onclick="currentSlide(4)">
+                    <span onclick="plusSlides(1)">
+                        <a class="next">&#10095;</a>
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <section class="gameContainer" id="gameContainer">
+            <div class="gameDiv" id="gameDiv">
+                <canvas class="canvas" id="canvasId"></canvas>
+            </div>
+            <div class="leaderboardWrapper">
+                <div class="leaderboard">
+                    <h3>Hardcore leaderboard</h3>
+                    <div class="records">
+                        <ul class="recordsText" id="names">
+                            <li class="single-record">
+                                <p class="names" id="p1"></p>
+                                <p class="times" id="t1"></p>
+                            </li>
+                            <li class="single-record">
+                                <p class="names" id="p2"></p>
+                                <p class="times" id="t2"></p>
+                            </li>
+                            <li class="single-record">
+                                <p class="names" id="p3"></p>
+                                <p class="times" id="t3"></p>
+                            </li>
+                            <li class="single-record">
+                                <p class="names" id="p4"></p>
+                                <p class="times" id="t4"></p>
+                            </li>
+                            <li class="single-record">
+                                <p class="names" id="p5"></p>
+                                <p class="times" id="t5"></p>
+                            </li>
+                            <li class="single-record">
+                                <p class="names" id="p6"></p>
+                                <p class="times" id="t6"></p>
+                            </li>
+                            <li class="single-record">
+                                <p class="names" id="p7"></p>
+                                <p class="times" id="t7"></p>
+                            </li>
+                            <li class="single-record">
+                                <p class="names" id="p8"></p>
+                                <p class="times" id="t8"></p>
+                            </li>
+                            <li class="single-record">
+                                <p class="names" id="p9"></p>
+                                <p class="times" id="t9"></p>
+                            </li>
+                            <li class="single-record">
+                                <p class="names" id="p10"></p>
+                                <p class="times" id="t10"></p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <footer>
+        <span class="footer-line"></span>
+        <div class="about-me footer-text">
+            <div class="about-text">
+                <h2 class="footer-title">About Me</h2>
+                <p>
+                    Thanks for visiting my website! My name is Cole Patton and I am the sole developer of this website.
+                    This
+                    website is a small project of mine that I work on for fun,
+                    and acts as a playground for me to experiment with different aspects of full stack development.
+                    Please
+                    feel free to email me with any advice or suggestions.
+                </p>
+            </div>
+        </div>
+        <div class="contact footer-text">
+            <div class="contact-text">
+                <h2 class="footer-title">Contact</h2>
+                <p>
+                    For questions, suggestions, or issues with the site, please contact me at
+                    <a href="mailto:patton1502@gmail.com">patton1502@gmail.com</a>
+                </p>
+            </div>
+        </div>
     </footer>
+
 
     <!-- Start JavaScript -->
     <!-- Start JavaScript -->
@@ -296,9 +474,9 @@
         });
         socket.on('loadLevelResponse', function (data) {
             loadBlocksFromArray(data.blockData);
-            if (data.blockData.length > 0) {
-                document.getElementById("current-level").innerHTML = "Current Level: " + data.blockData[0].level_id;
-            }
+            // if (data.blockData.length > 0) {
+            //     document.getElementById("current-level").innerHTML = "Current Level: " + data.blockData[0].level_id;
+            // }
         });
         socket.on('personalBestResponse', function (data) {
             if (data.success) {
@@ -315,7 +493,7 @@
             continueGame(data.level);
         });
         socket.on('checkName', function (data) {
-            socket.emit('checkNameR', { n: <%- JSON.stringify(username) %>});
+            socket.emit('checkNameR', { n: <%- JSON.stringify(username) %> });
         })
         socket.on('setSessionID', function (data) {
             localStorage.setItem("uid", data.sid);

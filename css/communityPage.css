@@ -12,11 +12,17 @@ body {
   padding: 0;
   margin: 0;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 header {
   background-color: #353535;
   display: flex;
+  top: 0;
+  padding: 0 10em; /*add top/bottom padding later*/
+  width: 100%;
 }
 
 .logo {
@@ -61,6 +67,7 @@ a {
   margin: 5px;
 }
 .mobileNavigation {
+  display: none; /* add mobile nav back in later */
   position: relative;
   transform: translateY(-100%);
   z-index: -1;
@@ -75,7 +82,6 @@ a {
   background: #353535;
   color: #d6d6d6;
   text-shadow: none;
-  height: 100%;
   outline: none;
   border-width: 0px;
   padding-left: .8em;
@@ -127,18 +133,34 @@ a {
 }
 
 .main-container {
-  display: flex;
-  padding: 0 4%;
-  margin: 1em 0 3em;
+  padding: 8em 10em 10em;
 }
+.welcomeText {
+  font-family: Helvetica Neue, Arial, sans-serif;
+  color: lightgray;
+  margin-bottom: 8em;
+}
+.welcomeText h2 {
+  font-size: 1.8em;
+  line-height: 1em;
+  color: #ffffff;
+  margin-bottom: .2em;
+}
+/* .welcomeText p {
+  font-size: 1.8em;
+  line-height: 1em;
+  color: #ffffff;
+  margin-bottom: .2em;
+} */
+
 #ratingContainerTemplate {
   display: none;
 }
 .level {
   display: flex;
   flex-direction: column;
-  width: 21%;
-  margin: 0 1% 5%;
+  width: 22%;
+  /* margin: 0 1% 5%; */
   background-color: #0bf593;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
@@ -165,7 +187,6 @@ a {
   margin-top: 0;
   line-height: 1em;
   font-size: 18px;
-  flex: 2;
 }
 .textContainer {
   margin: auto 12px 12px;
@@ -204,7 +225,6 @@ a {
   99% {height: 55%; object-fit: cover;}
   100% {object-fit: initial;}
 }
-
 @keyframes reveal {
   0% {height: 75%; object-fit: cover;}
   99% {height: 55%; object-fit: cover;}
@@ -220,7 +240,7 @@ a {
 
 .selectedCard {
   width: 100% !important;
-  padding: 2em;
+  padding: 2em 3em;
 }
 .selectedCard:hover {
   box-shadow: none !important;
@@ -233,10 +253,15 @@ a {
 .selectedCard .details {
   line-height: 1.5em;
 }
+.selectedCard .levelTitle {
+  padding: 0;
+}
 .levelTitle {
   display: flex;
-  align-items: left;
-  padding: 6px 12px .7em;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  padding: 6px 12px 1em;
 }
 .levelTitle .line1 {
   transform: translateY(8px) rotate(45deg);
@@ -244,17 +269,12 @@ a {
 .levelTitle .line2 {
   transform: rotate(-45deg);
 }
-.levelName {
-  width: 90%;
-}
-#playButton {
-  margin: 0 1em;
-}
 .unselectCardButton {
-  width: 3.8em;
-  height: 2em;
-  right: 2em;
-  top: 2em;
+  height: 4em;
+  width: 4em;
+  right: -4.5em;
+  top: -1.5em;
+  position: absolute;
   cursor: pointer;
 }
 .unselectCardButton div {
@@ -265,13 +285,15 @@ a {
 }
 .level-container{
   display: flex;
-  overflow: auto;
   flex-wrap: wrap;
-  scroll-behavior: smooth;
-  padding: 20px 25px;
-  width: 90%;
-  margin: auto;
   justify-content: space-between;
+  row-gap: 4em;
+  scroll-behavior: smooth;
+}
+.level-container::after {
+  content: "";
+  /* flex: auto; */
+  width: 48%;
 }
 .gameDiv {
   padding-top: 2em;
@@ -325,7 +347,7 @@ span:hover ~ span:before {
   font-size: .8em;
   height: 2.5em;
 }
-.level-templates::-webkit-scrollbar {
+/* .level-templates::-webkit-scrollbar {
   width: 15px;
   height: 15px;
 }
@@ -333,7 +355,7 @@ span:hover ~ span:before {
 .level-templates::-webkit-scrollbar-thumb {
   background: rgb(160, 160, 160);
   border-radius: 10px;
-}
+} */
 
 #gameDiv {
   display: none;
@@ -394,14 +416,12 @@ h4 {
 footer {
   background-color: #353535;
   color: lightgray;
-  position: relative;
   display: flex;
-  margin-top: 2em;
-  padding: 2% 4% 0;
+  justify-content: space-between;
+  padding: 2em 10em;
 }
 
 .about-me {
-  margin: 0 auto;
   width: 70%;
 }
 
@@ -415,7 +435,6 @@ footer {
 }
 
 .contact {
-  margin: 0 auto;
   width: 22%;
 }
 
@@ -428,24 +447,19 @@ h2 {
 }
 
 @media only screen and (min-width: 1150px) {
+  header{
+    max-height: 5em;
+    padding: 0 5em;
+  }
   .selectedCard {
     width: 80% !important;
     margin-left: 10% !important;
-  }
-}
-@media only screen and (max-width: 1350px) {
-  .main-container {
-    padding: 0;
   }
 }
 
 @media only screen and (max-width: 1150px) {
   .gameDiv {
     width: 100%;
-  }
-  .main-container {
-    padding: 0 4%;
-    display: block;
   }
   h3 {
     padding-top: 10px;
@@ -456,24 +470,18 @@ h2 {
   .level {
     width: 29.33%;
   }
-  footer {
-    padding-top: 2%;
-  }
-  .contact {
-    width: 23%;
-  }
 }
 
 @media only screen and (max-width: 950px) {
-  .level-container {
-    width: 100%;
+  header {
+    text-align: center;
+  }
+  .main-container {
+    padding: 5em;
   }
   .details {
     font-size: 12px;
     font-weight: 400;
-  }
-  header {
-    text-align: center;
   }
   .logo {
     max-height: 6em;
@@ -510,26 +518,44 @@ h2 {
   .mobileNavigationOpen {
     transform: translateY(0%);
     display: block;
-    z-index: 1;
+    z-index: 10;
+    width: 100vw;
+    top: 6em;
+    position: absolute;
+    height: 5%;
     transition: transform 0.5s ease-in, z-index 3s;
-  }
-  .main-container {
-    transform: translateY(-90px);
-    transition: transform 0.5s ease-in;
-    margin: 1em 0;
-  }
-  .mainContainerMoveDown {
-    transform: translateY(0);
   }
   .navigationBar {
     display: none;
   }
   .navigation {
     width: 100%;
+    padding: .7em 0;
   }
-  .footerAdjust {
-    margin-top: -4em;
+  .template {
+    height: 45%;
   }
+  /* .level:hover .template {
+    height: 65%;
+    transition: height .5s ease-out;
+    object-fit: cover;
+  }
+  .level:not(:hover) .template {
+    -webkit-animation-name: reveal;
+    -webkit-animation-duration: .4s;
+    animation-name: reveal;
+    animation-duration: .4s;
+  }
+  @-webkit-keyframes reveal {
+    0% {height: 65%; object-fit: cover;}
+    99% {height: 45%; object-fit: cover;}
+    100% {object-fit: initial;}
+  }
+  @keyframes reveal {
+    0% {height: 65%; object-fit: cover;}
+    99% {height: 45%; object-fit: cover;}
+    100% {object-fit: initial;}
+  } */
   footer {
     padding: 3% 5%;
     display: block;
@@ -549,29 +575,17 @@ h2 {
   #sortOptions {
     margin-left: 0;
   }
-  #playButton {
-    margin-top: 1em;
-  }
   .textContainer {
     margin: auto 6px 6px;
   }
   .levelTitle {
-    padding: 0 6px .7em;
-  }
-  .levelName {
-    width: 100%;
+    padding: 0 6px 1em;
   }
   .rating {
     display: none;
   }
   .selectedCard .details {
     display: none;
-  }
-  .unselectCardButton {
-    width: 2.5em;
-    left: 86%;
-    top: -5.5em;
-    position: relative;
   }
   #ratingContainer {
     display: block;
@@ -590,29 +604,28 @@ h2 {
 @media only screen and (max-width: 600px) {
   .level {
     width: 44%;
-    margin: 0 2% 10%;
+    /* margin: 0 2% 10%; */
   }
 }
 
-@media only screen and (max-width: 400px) {
-  footer {
-    padding: 5%;
+@media only screen and (max-width: 450px) {
+  .main-container {
+    padding: 2em;
   }
-  .level {
-    width: 44%;
-    margin: 0 2% 14%;
+  .welcomeText {
+    margin-bottom: 4em;
   }
 }
 
 @media only screen and (min-width: 1800px) {
   .levelName {
-    font-size: 2em;
+    font-size: 1.5em;
   }
   .rating {
-    font-size: 2em;
+    font-size: 1.5em;
   }
   .details {
-    font-size: 1.5em;
+    font-size: 1.2em;
     font-weight: 400;
   }
 }

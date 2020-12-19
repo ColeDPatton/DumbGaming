@@ -46,8 +46,6 @@ var player = new Player();
 
 function startGame(mode) {
     // closeMobileNav();
-    document.body.scrollTop = 500;
-    document.documentElement.scrollTop = 500;
     canvas = document.getElementById("canvasId");
     ctx = canvas.getContext("2d");
     if (player.username === null && mode === 1) {
