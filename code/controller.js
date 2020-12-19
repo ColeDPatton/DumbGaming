@@ -24,6 +24,9 @@ var wantToJumpTimer = 0;
 var lastEvent = null;
 function move(event) {
     if (gameStarted) {
+        if (level === 1 && instructed === 1) {
+            instructed++;
+        }
         if (event.keyCode === 37 || event.keyCode === 65) {
             moveLeft();
         } else if (event.keyCode === 39 || event.keyCode === 68) {

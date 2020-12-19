@@ -34,9 +34,6 @@ header {
 
 .logo:hover {
   cursor: pointer;
-  -moz-box-shadow: inset 10px 7px 20px 0px #1b1b1b;
-  -webkit-box-shadow: inset 10px 7px 20px 0px #1b1b1b;
-  box-shadow: inset 10px 7px 20px 0px #1b1b1b;
 }
 
 a {
@@ -445,7 +442,6 @@ h4 {
   display: flex;
   justify-content: space-between;
   padding: 5em 10em;
-  margin-top: -3em;
   width: 100vw;
 }
 .hideMainContainer {
@@ -470,7 +466,12 @@ h4 {
   color: lightgray;
   font-family: Helvetica Neue, Arial, sans-serif;
 }
-
+.options h2 {
+  font-size: 1.8em;
+  line-height: 1em;
+  color: #ffffff;
+  margin-bottom: .2em;
+}
 .optionButtons {
   position: absolute;
   z-index: 5;
@@ -481,24 +482,29 @@ h4 {
   display: flex;
   width: 50%;
 }
-
 .optionsCard {
+  position: relative;
+  margin-top: 2em;
+}
+.optionsCardBackground {
+  position: absolute;
   border-radius: 5px;
   width: 0;
-  transition: width .5s ease-out;
-  z-index: 5;
-  margin-top: 2em;
+  height: 0;
+  transition: width .5s ease-out, height .5s ease-out;
+  z-index: -1;
   background: #353535;
 }
 
-.optionsCard:hover {
-  width: 600px;
-  transition: width .5s ease-out;
-  padding-bottom: 16px;
+.optionsCard:hover .optionsCardBackground {
+  width: 110%;
+  height: 100%;
+  transition: width .5s ease-out, height .5s ease-out;
 }
 
 .optionsCard:hover .cardDescription {
   display: block;
+  padding-bottom: 16px;
 }
 
 .optionsCard:hover .gameButton {
@@ -657,9 +663,12 @@ h2 {
   right: 0px;
 }
 
-@media only screen and (max-width: 1310px) {
+@media only screen and (max-width: 1400px) {
   .gameDiv {
     width: 65%;
+  }
+  .mainContainer {
+    padding: 3em 10em 5em;
   }
   .options p {
     margin-top: 0;
@@ -685,10 +694,14 @@ h2 {
 @media only screen and (max-width: 1200px) {
   header{
     max-height: 5em;
+    padding: 0 5em;
   }
-}
-
-@media only screen and (max-width: 1150px) {
+  .mainContainer {
+    padding: 2em 5em 5em;
+  }
+  .gameContainer {
+    padding: 5em;
+  }
   .leaderboardWrapper {
     font-size: 90%;
   }
@@ -702,6 +715,9 @@ h2 {
   .newGameCardOn button {
     font-size: 1.1em;
   }
+  footer {
+    padding: 2em 5em;
+  }
 }
 
 @media only screen and (max-width: 950px) {
@@ -714,9 +730,6 @@ h2 {
   .navigation {
     font-size: 1em;
   }
-  .gameButton {
-    margin-top: 2%;
-  }
   .slideshow-container {
     margin: 7% 0 0 8%;
   }
@@ -724,8 +737,8 @@ h2 {
     width: 100%;
   }
   .gameContainer {
-    display: block;
-    margin: 10em 4em 2em;
+    flex-direction: column;
+    /* margin: 10em 4em 2em; */
   }
   #game-placeholder {
     margin: auto;
@@ -808,12 +821,16 @@ h2 {
   .mobileNavigationOpen {
     transform: translateY(0%);
     display: block;
-    z-index: 1;
+    z-index: 10;
+    width: 100vw;
+    top: 6em;
+    position: absolute;
+    height: 5%;
     transition: transform 0.5s ease-in, z-index 3s;
   }
   .mainContainer {
-    transform: translateY(-40%);
-    transition: transform 0.5s ease-in;
+    /* transform: translateY(-40%);
+    transition: transform 0.5s ease-in; */
   }
   .options {
     margin-right: 10%;
@@ -837,18 +854,15 @@ h2 {
     bottom: 5px;
     max-width: 225px;
   }
-  .slides {
-    max-width: 225px;
-  }
   .fillerImage {
     display: block;
     margin: 3em 3em 0 -3em;
     max-width: 225px;
   }
   .gameContainer {
-    transform: translateY(-12%);
+    /* transform: translateY(-12%);
     transition: transform 0.5s ease-in;
-    margin-top: 1em;
+    margin-top: 1em; */
   }
   .mainContainerMoveDown {
     transform: translateY(0);
@@ -859,9 +873,6 @@ h2 {
   .navigation {
     width: 100%;
     padding: 1%;
-  }
-  .gameButton {
-    margin-top: 5%;
   }
   .leaderboard {
     margin: 8em auto 4em;
@@ -897,56 +908,49 @@ h2 {
   .optionsCard:hover .cardDescription {
     width: 400px;
   }
-  .optionsCard:hover {
-    width: 450px;
+  .slideshow-container {
+    margin: 3em 0 0;
   }
 }
-@media only screen and (max-width: 550px) {
+@media only screen and (max-width: 600px) {
   header {
     text-align: center;
     display: block;
   }
   .gameContainer {
-    transform: translateY(-20%);
+    /* transform: translateY(-20%);
     margin-top: 22em;
     margin-left: 4%;
-    margin-right: 4%;
+    margin-right: 4%; */
   }
   .mainContainer {
-    transform: translateY(-200%);
-    margin: 5em 4%;
+    flex-direction: column;
+    padding: 4em 4em 6em;
+  }
+  .optionButtons {
+    position: unset;
   }
   .slides {
-    display: none !important;
+    margin: auto;
   }
   .fillerImage {
     display: none;
   }
-  .slideshow-background {
-    height: 5em;
-    width: 6em;
-    left: -50px;
-    top: -16px;
-}
-  .slideshow-background2 {
-    display: block;
-    height: 5em;
-    width: 2em;
-    left: -34px;
-    bottom: -12em;
-    max-width: 225px;
-}
-  .slideshow-background3 {
-    display: block;
-    height: 4em;
-    width: 4em;
-    left: -64px;
-    bottom: -4em;
-    max-width: 225px;
-}
-  .mainContainerMoveDown {
-    transform: translateY(0);
+  .slideshow-container {
+    margin-top: 6em;
   }
+  .slideshow-background {
+    display: none;
+  }
+  .slideshow-background2 {
+    display: none;
+  }
+  .dots {
+    display: flex;
+  }
+  /* .mainContainerMoveDown {
+    transform: translateY(0);
+  } */
   .button-container {
     margin: 0;
     text-align: center;
@@ -963,9 +967,6 @@ h2 {
   .prev, .next {
     padding: 22.5% 5%;
   }
-  .gameButton {
-    margin-top: 2%;
-  }
   #game-placeholder div {
     margin: 0% auto auto;
 }
@@ -976,14 +977,11 @@ h2 {
     columns: 1;
   }
   .options {
-    padding-bottom: 1%;
+    min-width: unset;
+    text-align: center;
   }
   .optionsRow {
     display: block;
-  }
-  .optionsCard:hover {
-    width: 0;
-    padding-bottom: 0;
   }
   .optionsCard:hover .gameButton {
     margin-left: 0;
@@ -992,24 +990,47 @@ h2 {
   .optionsCard:hover .cardDescription {
     display: none;
   }
+  .optionsCard:hover .optionsCardBackground {
+    display: none;
+  }
   #playGameBack {
     margin-bottom: 2%;
   }
 }
 
-@media only screen and (max-width: 400px) {
-  .slideshow-background {
-    width: 4em;
-    left: -68px;
+@media only screen and (max-width: 450px) {
+  .mainContainer {
+    padding: 4em 2em 6em;
   }
-  .slideshow-background2 {
-    left: -44px;
-    width: 2em;
+  /* .text {
+    bottom: 36px;
+    font-size: 12px;
+  } */
+  .slides {
+    width: 80%;
   }
-  .slideshow-background3 {
-    width: 4em;
-    height: 4em;
-    left: -94px;
+  .dot {
+    /* display: none; */
+  }
+  .dots span {
+    position: absolute;
+    top: 25%;
+  }
+  .dots span:first-of-type {
+    left: 0;
+  }
+  .dots span:last-of-type {
+    right: 0;
+  }
+
+  .gameContainer {
+    padding: 5em 2em;
+  }
+
+}
+/* @media only screen and (max-width: 500px) {
+  .gameContainer {
+    padding: 3em 2em;
   }
   .button-container {
     width: 80%;
@@ -1036,32 +1057,46 @@ h2 {
   footer {
     padding: 5%;
   }
-}
 
-@media only screen and (max-width: 350px) {
   .slideshow-background {
-    top: 10px;
+    top: 60px;
     left: -87px;
   }
   .slideshow-background2 {
     left: -74px;
-    top: 152px;
+    top: 202px;
   }
   .slideshow-background3 {
-    top: 42px;
+    top: 92px;
     left: -114px;
   }
-}
 
-/* @media only screen and (min-width: 1600px) {
-  .gameContainer {
-    display: flex;
-    margin: 8em auto 3em;
-    max-width: 1500px;
+  .options {
+    padding: 0 2em;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    min-width: unset;
+
+  }
+  .slideshow-container {
+    display: none;
   }
   .mainContainer {
-    display: flex;
-    margin: 5em auto;
-    max-width: 1500px;
+    padding: 0;
+    transform: unset;
+    height: 480px;
+    overflow: hidden;
+    margin: 2em 0;
+
   }
 } */
+
+@media only screen and (min-width: 1800px) {
+  .gameContainer {
+    padding: 5em 20em;
+  }
+  .mainContainer {
+    padding: 5em 20em;
+  }
+}

@@ -7,10 +7,10 @@ const navSlide = () => {
 
     burger.addEventListener('click', () => {
         navMenu.classList.toggle('mobileNavigationOpen');
-        mainContainer.classList.toggle('mainContainerMoveDown');
-        topSection.classList.toggle('mainContainerMoveDown');
+        // mainContainer.classList.toggle('mainContainerMoveDown');
+        // topSection.classList.toggle('mainContainerMoveDown');
         burger.classList.toggle('burgerClicked');
-        options.classList.toggle('optionsAdjust');
+        // options.classList.toggle('optionsAdjust');
     });
 }
 

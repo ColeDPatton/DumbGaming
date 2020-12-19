@@ -228,7 +228,11 @@ var update = setInterval(function () {
 
                 }
             } else if (message === "") {
-                setDesiredMessage("Amount of times you've failed: " + deathCount);
+                if (level === 1 && instructed === 1) {
+                    setMessage("Press any key to continue");
+                } else {
+                    setDesiredMessage("Amount of times you've failed: " + deathCount);
+                }
             }
         }
 
@@ -300,7 +304,7 @@ function deathCheck() {
                 deathMessages[1] = 1;
             } else if (deathCount === 49) {
                 deathMessages[2] = 1;
-            } else if (deathCount === 100) {
+            } else if (deathCount === 99) {
                 deathMessages[3] = 1;
             }
             if (level === 4 && instructed === 0) {
@@ -335,7 +339,7 @@ function deathCheck() {
                             deathMessages[1] = 1;
                         } else if (deathCount === 49) {
                             deathMessages[2] = 1;
-                        } else if (deathCount === 100) {
+                        } else if (deathCount === 99) {
                             deathMessages[3] = 1;
                         }
                     }
@@ -486,16 +490,16 @@ var sent = 0;
 function getMessages() {
     if (level === 1 && instructed >= 0 && instructed < 6) {
         if (instructed === 0) {
-            setDesiredMessage("click anywhere to get started");
-        } else if (instructed === 1) {
-            setDesiredMessage("I'm here to help.");
+            setDesiredMessage("Press any key to continue");
         } else if (instructed === 2) {
-            setDesiredMessage("I'll only instruct you once.");
+            setDesiredMessage("I'm here to help.");
         } else if (instructed === 3) {
-            setDesiredMessage("Use the left and right arrow keys to move.");
+            setDesiredMessage("I'll only instruct you once.");
         } else if (instructed === 4) {
-            setDesiredMessage("And use the space bar to jump.");
+            setDesiredMessage("Use the left and right arrow keys to move.");
         } else if (instructed === 5) {
+            setDesiredMessage("And use the space bar to jump.");
+        } else if (instructed === 6) {
             setDesiredMessage("Now get to the green square.");
         }
     } else if (level === 3 && instructed > 0 && instructed < 4) {
@@ -647,7 +651,7 @@ function getMessages() {
             }
         } else if (deathMessages[3] === 3) {
             if (!sent) {
-                setDesiredMessage("You might not be talented. Or Skilled. Or good a this...");
+                setDesiredMessage("You might not be talented. Or Skilled. Or good at this...");
                 sent = 1;
             }
             if (desiredMessage === "") {
