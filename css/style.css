@@ -547,6 +547,18 @@ footer {
   .optionsCard {
     padding: 1em;
   }
+  .hideMainContainer {
+    -webkit-animation: none;
+    animation: none;
+    display: none;
+  }
+  .showGameContainer {
+    -webkit-animation: none;
+    animation: none;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
   .middleWrapper {
     row-gap: 2em;
     -webkit-column-gap: 0;
@@ -568,6 +580,15 @@ footer {
     margin-top: 4em;
     height: 350px;
   }
+  .gameContainer .middleWrapper {
+    max-height: none;
+  }
+  .gameDiv {
+    -ms-grid-column: 1;
+        grid-column-start: 1;
+    grid-column-end: 10;
+    grid-row-end: 3;
+  }
   footer {
     padding: 2em;
     -webkit-box-orient: vertical;
@@ -584,6 +605,9 @@ footer {
 @media only screen and (max-width: 450px) {
   .mainContainer {
     padding: 3em 2em 8em;
+  }
+  .gameContainer {
+    padding: 3em 2em 6em;
   }
 }
 
@@ -704,6 +728,54 @@ footer {
     opacity: 0;
     z-index: -1000;
     padding: 2em 6em;
+  }
+}
+
+@-webkit-keyframes hideMainMobile {
+  0% {
+    margin-left: 0;
+    display: -webkit-box;
+    display: flex;
+  }
+  99% {
+    margin-left: -100%;
+    display: -webkit-box;
+    display: flex;
+    position: relative;
+    opacity: 1;
+  }
+  100% {
+    margin-left: -100%;
+    position: absolute;
+    display: none;
+    opacity: 0;
+    z-index: -1000;
+    padding: 0;
+  }
+}
+
+@keyframes hideMainMobile {
+  0% {
+    margin-left: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  99% {
+    margin-left: -100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    position: relative;
+    opacity: 1;
+  }
+  100% {
+    margin-left: -100%;
+    position: absolute;
+    display: none;
+    opacity: 0;
+    z-index: -1000;
+    padding: 0;
   }
 }
 
