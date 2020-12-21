@@ -14,9 +14,8 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="A fun game solely developed for the 
-                purpose of entertainment. Jump from ledge to ledge to reach 
-                the green square while avoiding tricks and traps.">
+    <meta name="description"
+        content="A cute little game and a great way to kill a couple minutes. Jump from ledge to ledge to reach the green square while avoiding tricks and traps.">
     <meta name="keywords" content="Dumb Gaming,Dumb game,dumb,gaming,game,
                 platformer,fun,entertainment,project,developer,blocks,
                 level creator">
@@ -29,11 +28,11 @@
         <img src="DumbGamingLogo.svg" class="logo" onclick="homeScreen()" alt="Dumb Gaming logo">
 
         <div class="navigationBar">
-            <button class="navigation" onclick="location.href='/'">Home</button>
-            <button class="navigation" onclick="location.href='/community'">Community Levels</button>
-            <button class="navigation" onclick="location.href='/creative'">Level Creator</button>
-            <button class="navigation">Races</button>
-            <button class="navigation" id="logging" onclick="location.href='/login'">Log In</button>
+            <a class="navigation" onclick="location.href='/'">Home</a>
+            <a class="navigation" onclick="location.href='/community'">Community Levels</a>
+            <a class="navigation" onclick="location.href='/creative'">Level Creator</a>
+            <!-- <a class="navigation">Races</a> -->
+            <a class="navigation" id="logging" onclick="location.href='/login'">Log In</a>
         </div>
         <div class="burger">
             <div class="line1"></div>
@@ -42,11 +41,11 @@
         </div>
     </header>
     <div class="mobileNavigation">
-        <button class="navigation" onclick="location.href='/'">Home</button>
-        <button class="navigation" onclick="location.href='/community'">Community Levels</button>
-        <button class="navigation" onclick="location.href='/creative'">Level Creator</button>
-        <button class="navigation">Races</button>
-        <button class="navigation" id="logging" onclick="location.href='/login'">Log In</button>
+        <a class="navigation" onclick="location.href='/'">Home</a>
+        <a class="navigation" onclick="location.href='/community'">Community Levels</a>
+        <a class="navigation" onclick="location.href='/creative'">Level Creator</a>
+        <!-- <a class="navigation">Races</a> -->
+        <a class="navigation" id="logging" onclick="location.href='/login'">Log In</a>
     </div>
     <div class="bodyContainer">
         <section class="mainContainer" id="mainContainer">
@@ -83,27 +82,8 @@
                     </div>
                 </div>
             </div>
-            <div class="slideshow-container hide_slideshow" id="slideshow-container">
-                <span class="slideshow-background"></span>
-                <div class="slides fade">
-                    <img class="slide-images" src="image1.png" alt="game image">
-                </div>
-                <div class="slides fade">
-                    <img class="slide-images" src="image2.png" alt="game image">
-                </div>
-                <div class="slides fade">
-                    <img class="slide-images" src="image3.png" alt="game image">
-                </div>
-                <div class="slides fade">
-                    <img class="slide-images" src="image4.png" alt="game image">
-                </div>
-                <span class="slideshow-background2"></span>
-                <span class="slideshow-background3"></span>
-                <div class="fillerImage">
-                    <img class="slide-images" src="image3.png" alt="game image">
-                </div>
-                <br>
-                <div class="dots">
+            <div class="middleWrapper">
+                <!-- <div class="dots">
                     <span onclick="plusSlides(-1)">
                         <a class="prev">&#10094;</a>
                     </span>
@@ -114,61 +94,133 @@
                     <span onclick="plusSlides(1)">
                         <a class="next">&#10095;</a>
                     </span>
+                </div> -->
+                <div class="slideshow-container hide_slideshow" id="slideshow-container">
+                    <div class="slides fade">
+                        <img class="slide-images" src="image2.png" alt="game image">
+                    </div>
+                    <div class="slides fade">
+                        <img class="slide-images" src="image3.png" alt="game image">
+                    </div>
+                    <div class="slides fade">
+                        <img class="slide-images" src="image4.png" alt="game image">
+                    </div>
+                    <div class="slides fade">
+                        <img class="slide-images" src="image1.png" alt="game image">
+                    </div>
+                    <div class="dots">
+                        <!-- <span onclick="plusSlides(-1)">
+                        </span> -->
+                        <img class="prev" src="Arrow.svg" alt="" onclick="plusSlides(-1)">
+                        <span class="dot" onclick="currentSlide(1)"></span>
+                        <span class="dot" onclick="currentSlide(2)"></span>
+                        <span class="dot" onclick="currentSlide(3)"></span>
+                        <span class="dot" onclick="currentSlide(4)"></span>
+                        <img class="next" src="Arrow.svg" alt="" onclick="plusSlides(1)">
+                        <!-- <span onclick="plusSlides(1)">
+                        </span> -->
+                    </div>
+                </div>
+
+                <div class="leaderboard">
+                    <div>
+                        <h3>Hardcore leaderboard</h3>
+                    </div>
+                    <!-- <div class="records"> -->
+                    <div class="single-record">
+                        <p class="names p1"></p>
+                        <p class="times t1"></p>
+                    </div>
+                    <div class="single-record">
+                        <p class="names p2"></p>
+                        <p class="times t2"></p>
+                    </div>
+                    <div class="single-record">
+                        <p class="names p3"></p>
+                        <p class="times t3"></p>
+                    </div>
+                    <div class="single-record">
+                        <p class="names p4"></p>
+                        <p class="times t4"></p>
+                    </div>
+                    <div class="single-record">
+                        <p class="names p5"></p>
+                        <p class="times t5"></p>
+                    </div>
+                    <div class="single-record">
+                        <p class="names p6"></p>
+                        <p class="times t6"></p>
+                    </div>
+                    <div class="single-record">
+                        <p class="names p7"></p>
+                        <p class="times t7"></p>
+                    </div>
+                    <div class="single-record">
+                        <p class="names p8"></p>
+                        <p class="times t8"></p>
+                    </div>
+                    <div class="single-record">
+                        <p class="names p9"></p>
+                        <p class="times t9"></p>
+                    </div>
+                    <div class="single-record">
+                        <p class="names p10"></p>
+                        <p class="times t10"></p>
+                    </div>
+                    <!-- </div> -->
                 </div>
             </div>
         </section>
 
         <section class="gameContainer" id="gameContainer">
-            <div class="gameDiv" id="gameDiv">
-                <canvas class="canvas" id="canvasId"></canvas>
-            </div>
-            <div class="leaderboardWrapper">
+            <div class="middleWrapper">
+                <div class="gameDiv" id="gameDiv">
+                    <canvas class="canvas" id="canvasId"></canvas>
+                </div>
                 <div class="leaderboard">
                     <h3>Hardcore leaderboard</h3>
-                    <div class="records">
-                        <ul class="recordsText" id="names">
-                            <li class="single-record">
-                                <p class="names" id="p1"></p>
-                                <p class="times" id="t1"></p>
-                            </li>
-                            <li class="single-record">
-                                <p class="names" id="p2"></p>
-                                <p class="times" id="t2"></p>
-                            </li>
-                            <li class="single-record">
-                                <p class="names" id="p3"></p>
-                                <p class="times" id="t3"></p>
-                            </li>
-                            <li class="single-record">
-                                <p class="names" id="p4"></p>
-                                <p class="times" id="t4"></p>
-                            </li>
-                            <li class="single-record">
-                                <p class="names" id="p5"></p>
-                                <p class="times" id="t5"></p>
-                            </li>
-                            <li class="single-record">
-                                <p class="names" id="p6"></p>
-                                <p class="times" id="t6"></p>
-                            </li>
-                            <li class="single-record">
-                                <p class="names" id="p7"></p>
-                                <p class="times" id="t7"></p>
-                            </li>
-                            <li class="single-record">
-                                <p class="names" id="p8"></p>
-                                <p class="times" id="t8"></p>
-                            </li>
-                            <li class="single-record">
-                                <p class="names" id="p9"></p>
-                                <p class="times" id="t9"></p>
-                            </li>
-                            <li class="single-record">
-                                <p class="names" id="p10"></p>
-                                <p class="times" id="t10"></p>
-                            </li>
-                        </ul>
+                    <!-- <div class="records"> -->
+                    <div class="single-record">
+                        <p class="names p1"></p>
+                        <p class="times t1"></p>
                     </div>
+                    <div class="single-record">
+                        <p class="names p2"></p>
+                        <p class="times t2"></p>
+                    </div>
+                    <div class="single-record">
+                        <p class="names p3"></p>
+                        <p class="times t3"></p>
+                    </div>
+                    <div class="single-record">
+                        <p class="names p4"></p>
+                        <p class="times t4"></p>
+                    </div>
+                    <div class="single-record">
+                        <p class="names p5"></p>
+                        <p class="times t5"></p>
+                    </div>
+                    <div class="single-record">
+                        <p class="names p6"></p>
+                        <p class="times t6"></p>
+                    </div>
+                    <div class="single-record">
+                        <p class="names p7"></p>
+                        <p class="times t7"></p>
+                    </div>
+                    <div class="single-record">
+                        <p class="names p8"></p>
+                        <p class="times t8"></p>
+                    </div>
+                    <div class="single-record">
+                        <p class="names p9"></p>
+                        <p class="times t9"></p>
+                    </div>
+                    <div class="single-record">
+                        <p class="names p10"></p>
+                        <p class="times t10"></p>
+                    </div>
+                    <!-- </div> -->
                 </div>
             </div>
         </section>
@@ -214,49 +266,22 @@
     <script>
         var socket = io();
 
-        var p1 = document.getElementById('p1');
-        var p2 = document.getElementById('p2');
-        var p3 = document.getElementById('p3');
-        var p4 = document.getElementById('p4');
-        var p5 = document.getElementById('p5');
-        var p6 = document.getElementById('p6');
-        var p7 = document.getElementById('p7');
-        var p8 = document.getElementById('p8');
-        var p9 = document.getElementById('p9');
-        var p10 = document.getElementById('p10');
-        var t1 = document.getElementById('t1');
-        var t2 = document.getElementById('t2');
-        var t3 = document.getElementById('t3');
-        var t4 = document.getElementById('t4');
-        var t5 = document.getElementById('t5');
-        var t6 = document.getElementById('t6');
-        var t7 = document.getElementById('t7');
-        var t8 = document.getElementById('t8');
-        var t9 = document.getElementById('t9');
-        var t10 = document.getElementById('t10');
-
         socket.on('topTenResponse', function (data) {
             if (data.success) {
-                p1.innerText = "1st. " + data.leaderboard[0].player_username;
-                p2.innerText = "2nd. " + data.leaderboard[1].player_username;
-                p3.innerText = "3rd. " + data.leaderboard[2].player_username;
-                p4.innerText = "4th. " + data.leaderboard[3].player_username;
-                p5.innerText = "5th. " + data.leaderboard[4].player_username;
-                p6.innerText = "6th. " + data.leaderboard[5].player_username;
-                p7.innerText = "7th. " + data.leaderboard[6].player_username;
-                p8.innerText = "8th. " + data.leaderboard[7].player_username;
-                p9.innerText = "9th. " + data.leaderboard[8].player_username;
-                p10.innerText = "10th. " + data.leaderboard[9].player_username;
-                t1.innerText = Math.round(data.leaderboard[0].best_time / 1000) + "s";
-                t2.innerText = Math.round(data.leaderboard[1].best_time / 1000) + "s";
-                t3.innerText = Math.round(data.leaderboard[2].best_time / 1000) + "s";
-                t4.innerText = Math.round(data.leaderboard[3].best_time / 1000) + "s";
-                t5.innerText = Math.round(data.leaderboard[4].best_time / 1000) + "s";
-                t6.innerText = Math.round(data.leaderboard[5].best_time / 1000) + "s";
-                t7.innerText = Math.round(data.leaderboard[6].best_time / 1000) + "s";
-                t8.innerText = Math.round(data.leaderboard[7].best_time / 1000) + "s";
-                t9.innerText = Math.round(data.leaderboard[8].best_time / 1000) + "s";
-                t10.innerText = Math.round(data.leaderboard[9].best_time / 1000) + "s";
+                for (let i = 0; i < data.leaderboard.length; i++) {
+                    const name = data.leaderboard[i].player_username;
+                    const time = data.leaderboard[i].best_time;
+
+                    const nameElements = document.getElementsByClassName("p" + (i + 1));
+                    const timeElements = document.getElementsByClassName("t" + (i + 1));
+
+                    for (let j = 0; j < nameElements.length; j++) {
+                        nameElements[j].innerText = (i + 1) + ". " + name;
+                    }
+                    for (let j = 0; j < timeElements.length; j++) {
+                        timeElements[j].innerText = Math.round(time / 1000) + "s";
+                    }
+                }
             }
         });
 

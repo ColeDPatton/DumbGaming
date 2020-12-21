@@ -186,7 +186,7 @@ var update = setInterval(function () {
                 if (turnLevelOneGoalInvisible && blocks.length === 8) {
                     blocks[7].invisible = 1;
                     turnLevelOneGoalInvisible = false;
-                } else if (!turnLevelOneGoalInvisible && instructed === 6) {
+                } else if (!turnLevelOneGoalInvisible && instructed === 7) {
                     blocks[7].invisible = 0;
                 }
             }
@@ -330,7 +330,6 @@ function deathCheck() {
                             player.xPos > 90 && player.xPos < 200 && (player.yPos + player.height) < oRec.y) {
                             instructed = 1;
                         }
-
                         if (deathCount === 4) {
                             deathMessages[0] = 1;
                         } else if (deathCount === 19) {
@@ -449,8 +448,6 @@ function collisionDetectionY() {
                             instructed = 1;
                         } else if (level === 7 && player.xPos >= 50 && instructed === 0) {
                             instructed = 1;
-                        } else if (level === 8 && player.xPos >= 50 && instructed === 0) {
-                            instructed = 1;
                         }
                     }
                     player.jumpPower = oRec.bouncy ? -25 : -12;
@@ -486,7 +483,7 @@ var deathMessages = new Array(10);
 deathMessages.fill(0);
 var sent = 0;
 function getMessages() {
-    if (level === 1 && instructed >= 0 && instructed < 6) {
+    if (level === 1 && instructed >= 0 && instructed < 7) {
         if (instructed === 0) {
             setDesiredMessage("Press any key to continue");
         } else if (instructed === 2) {
@@ -528,19 +525,13 @@ function getMessages() {
         }
     } else if (level === 7 && instructed > 0 && instructed < 6) {
         if (instructed === 1) {
-            setDesiredMessage("You could make the jump.");
+            setDesiredMessage("You can make the jump.");
         } else if (instructed === 3) {
             setDesiredMessage("*sigh*");
         } else if (instructed === 4) {
             setDesiredMessage("Everyone else made the jump.");
         } else if (instructed === 5) {
             setDesiredMessage("Go ahead, try again.");
-        }
-    } else if (level === 8 && instructed > 0 && instructed < 3) {
-        if (instructed === 1) {
-            setDesiredMessage("There's nothing behind you.");
-        } else if (instructed === 2) {
-            setDesiredMessage("Except your long history of failures.");
         }
     } else if (level === 9 && instructed > 0 && instructed < 4) {
         if (instructed === 1) {
