@@ -52,12 +52,14 @@ body {
 /* HEADER */
 header {
     background-color: #353535;
+    user-select: none;
     display: flex;
     justify-content: space-between;
     align-items: center;
     top: 0;
     padding: 0 7em;
     width: 100%;
+    z-index: 10;
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -67,6 +69,7 @@ header {
     margin: 0;
     z-index: 10;
     max-height: 6em;
+    user-select: none;
     &:hover {
         cursor: pointer;
     }
@@ -82,11 +85,21 @@ header {
     }
 }
 .mobileNavigation {
-    display: none; /* add mobile nav back in later */
+    display: none;
+    user-select: none;
     position: relative;
-    transform: translateY(-100%);
     z-index: -1;
     transition: transform 0.5s ease-in, z-index 0s;
+    .navigation {
+        color: #d6d6d6;
+        padding: .3em 0;
+        font-size: 1.1em;
+        font-weight: bolder;
+        cursor: pointer;
+        &:hover {
+            background-color: #1f1f1f;
+        }
+    }
 }
 .burger {
     display: none;
@@ -292,6 +305,9 @@ footer {
     padding: 2em 10em;
     bottom: 0;
 }
+.about-me {
+    padding-right: 3em;
+}
 
 
 
@@ -357,14 +373,18 @@ footer {
         transition: transform .5s ease-in;
     }
     .mobileNavigationOpen {
-        transform: translateY(0%);
-        display: block;
-        z-index: 10;
+        background: #353535;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        text-align: center;
+        z-index: 1;
         width: 100vw;
+        height: 160px;
         top: 6em;
         position: absolute;
-        height: 5%;
-        transition: transform 0.5s ease-in, z-index 3s;
+        -webkit-animation: openNav 1s;
+        animation: openNav 1s;
     }
     .navigationBar {
       display: none;
@@ -384,6 +404,7 @@ footer {
     }
     .middleWrapper {
         row-gap: 2em;
+        column-gap: 0;
     }
     .slideshow-container {
         grid-column-end: 10;
@@ -401,6 +422,22 @@ footer {
     }
     footer {
         padding: 2em;
+        flex-direction: column;
+    }
+    .about-me {
+        padding-right: 0;
+        padding-bottom: 2em;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    .mainContainer {
+        padding: 3em 2em 8em;
+    }
+}
+@media only screen and (max-width: 350px) {
+    .slideshow-container {
+        padding: 2em 1em 1.5em;
     }
 }
 
@@ -465,4 +502,13 @@ footer {
         z-index: -1000;
         padding: 2em 6em;
     }
+}
+
+@-webkit-keyframes openNav {
+    0% {height: 0px; top: 0;}
+    100% {height: 160px; top: 6em;}
+}
+@keyframes openNav {
+    0% {height: 0px; top: 0;}
+    100% {height: 160px; top: 6em;}
 }

@@ -66,6 +66,10 @@ body {
 /* HEADER */
 header {
   background-color: #353535;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -78,6 +82,7 @@ header {
   top: 0;
   padding: 0 7em;
   width: 100%;
+  z-index: 10;
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -88,6 +93,10 @@ header {
   margin: 0;
   z-index: 10;
   max-height: 6em;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .logo:hover {
@@ -111,15 +120,28 @@ header {
 
 .mobileNavigation {
   display: none;
-  /* add mobile nav back in later */
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   position: relative;
-  -webkit-transform: translateY(-100%);
-          transform: translateY(-100%);
   z-index: -1;
   -webkit-transition: z-index 0s, -webkit-transform 0.5s ease-in;
   transition: z-index 0s, -webkit-transform 0.5s ease-in;
   transition: transform 0.5s ease-in, z-index 0s;
   transition: transform 0.5s ease-in, z-index 0s, -webkit-transform 0.5s ease-in;
+}
+
+.mobileNavigation .navigation {
+  color: #d6d6d6;
+  padding: .3em 0;
+  font-size: 1.1em;
+  font-weight: bolder;
+  cursor: pointer;
+}
+
+.mobileNavigation .navigation:hover {
+  background-color: #1f1f1f;
 }
 
 .burger {
@@ -409,6 +431,10 @@ footer {
   bottom: 0;
 }
 
+.about-me {
+  padding-right: 3em;
+}
+
 @media only screen and (max-width: 1400px) {
   header {
     padding: 0 4em;
@@ -485,18 +511,24 @@ footer {
     transition: transform .5s ease-in, -webkit-transform .5s ease-in;
   }
   .mobileNavigationOpen {
-    -webkit-transform: translateY(0%);
-            transform: translateY(0%);
-    display: block;
-    z-index: 10;
+    background: #353535;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+    text-align: center;
+    z-index: 1;
     width: 100vw;
+    height: 160px;
     top: 6em;
     position: absolute;
-    height: 5%;
-    -webkit-transition: z-index 3s, -webkit-transform 0.5s ease-in;
-    transition: z-index 3s, -webkit-transform 0.5s ease-in;
-    transition: transform 0.5s ease-in, z-index 3s;
-    transition: transform 0.5s ease-in, z-index 3s, -webkit-transform 0.5s ease-in;
+    -webkit-animation: openNav 1s;
+    animation: openNav 1s;
   }
   .navigationBar {
     display: none;
@@ -519,6 +551,8 @@ footer {
   }
   .middleWrapper {
     row-gap: 2em;
+    -webkit-column-gap: 0;
+            column-gap: 0;
   }
   .slideshow-container {
     grid-column-end: 10;
@@ -538,6 +572,26 @@ footer {
   }
   footer {
     padding: 2em;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .about-me {
+    padding-right: 0;
+    padding-bottom: 2em;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .mainContainer {
+    padding: 3em 2em 8em;
+  }
+}
+
+@media only screen and (max-width: 350px) {
+  .slideshow-container {
+    padding: 2em 1em 1.5em;
   }
 }
 
@@ -652,6 +706,28 @@ footer {
     opacity: 0;
     z-index: -1000;
     padding: 2em 6em;
+  }
+}
+
+@-webkit-keyframes openNav {
+  0% {
+    height: 0px;
+    top: 0;
+  }
+  100% {
+    height: 160px;
+    top: 6em;
+  }
+}
+
+@keyframes openNav {
+  0% {
+    height: 0px;
+    top: 0;
+  }
+  100% {
+    height: 160px;
+    top: 6em;
   }
 }
 /*# sourceMappingURL=style.css.map */
