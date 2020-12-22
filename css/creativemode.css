@@ -20,16 +20,14 @@ header {
 }
 
 .logo {
-  padding-top: 4px;
+  box-sizing: border-box;
+  padding: 1em 0;
   margin: 0;
   z-index: 10;
   max-height: 6em;
 }
 .logo:hover {
   cursor: pointer;
-  -moz-box-shadow: inset 10px 7px 20px 0px #1b1b1b;
-  -webkit-box-shadow: inset 10px 7px 20px 0px #1b1b1b;
-  box-shadow: inset 10px 7px 20px 0px #1b1b1b;
 }
 
 a {

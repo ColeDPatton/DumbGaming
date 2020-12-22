@@ -38,7 +38,8 @@ header {
 }
 
 .logo {
-  padding-top: 4px;
+  box-sizing: border-box;
+  padding: 1em 0;
   margin: 0;
   z-index: 10;
   max-height: 6em;
@@ -557,46 +558,6 @@ h2 {
     width: 100%;
     padding: .7em 0;
   }
-  /* header {
-    display: block;
-    max-height: 6em;
-  }
-  .burger {
-    display: block;
-  }
-  .burger div {
-    transform: scale(1) translate(0) rotate(0);
-    transition: transform .5s ease-in;
-  }
-  .burgerClicked .line1{
-    transform: scaleX(.7) translateX(-8px) translateY(11px) rotate(45deg);
-    transition: transform .5s ease-in;
-  }
-  .burgerClicked .line2{
-    transform: scaleY(.8) translateY(-8px);
-    transition: transform .5s ease-in;
-  }
-  .burgerClicked .line3{
-    transform: scaleX(.7) translateX(8px) translateY(-5px) rotate(-45deg);
-    transition: transform .5s ease-in;
-  }
-  .mobileNavigationOpen {
-    transform: translateY(0%);
-    display: block;
-    z-index: 10;
-    width: 100vw;
-    top: 6em;
-    position: absolute;
-    height: 5%;
-    transition: transform 0.5s ease-in, z-index 3s;
-  }
-  .navigationBar {
-    display: none;
-  }
-  .navigation {
-    width: 100%;
-    padding: .7em 0;
-  } */
   .welcomeText {
     margin-bottom: 4em;
   }
@@ -627,6 +588,9 @@ h2 {
   }
   .levelTitle {
     padding: 0 6px 1em;
+  }
+  .levelName {
+    width: 100%;
   }
   .rating {
     display: none;
