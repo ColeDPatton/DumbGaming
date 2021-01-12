@@ -41,6 +41,7 @@ function closeLevelEditor() {
 
 function editLevel() {
     die();
+    deathCount--;
     gameStarted = false;
 
     blocks.forEach(currentBlock => {

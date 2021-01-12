@@ -50,7 +50,7 @@ app.use(helmet({
             upgradeInsecureRequests: true,
         },
     },
-    referrerPolicy: {policy: 'same-origin'},
+    referrerPolicy: { policy: 'same-origin' },
 }));
 
 
@@ -183,6 +183,45 @@ io.on('connection', function (socket) {
     // });
 
     //load leaderboard
+
+
+
+    // let getAllCustomLevelBlocks = 'select username, custom_level_name, public, rating from custom_blocks_table where public IS NOT NULL group by custom_level_name';
+    // pool.query(getAllCustomLevelBlocks, (err, rows) => {
+    //     if (err) {
+    //         return console.error(err.message);
+    //     } else {
+    //         console.log(rows[1].custom_level_name);
+    //         rows.forEach(row => {
+    //             let saveBlocksAsCustomLevel = 'insert into custom_levels SET ? ';
+    //             pool.query(saveBlocksAsCustomLevel, {
+    //                 player_username: row.username, 
+    //                 custom_level_name: row.custom_level_name,
+    //                 times_beaten: 0,
+    //                 deaths_caused: 0,
+    //                 public: row.public,
+    //                 rating: 0,
+    //                 authorized: 0,
+    //                 selected_for_weekly_challenge: 0
+    //             }, (err, response) => {
+    //                 if (err) {
+    //                     console.error(err.message);
+    //                 } else {
+    //                     console.log(response);
+    //                 }
+    //             });
+    //         })
+    //     }
+    // });
+
+
+
+
+
+
+
+
+
     let getTimeLeaderboard = 'select player_username, best_time from players order by best_time asc limit 10';
     pool.query(getTimeLeaderboard, (err, rows) => {
         if (err) {
@@ -322,23 +361,6 @@ io.on('connection', function (socket) {
             }
         });
     });
-    socket.on('addLevelToCampaign', function (data) {
-        // let overrideCustomLevel = 'select MAX(level_id) from blocks_table';
-        let saveCampaignLevel = 'insert into blocks_table(level_id, x, y, w, h, goal, invisible, ghost, deadly, bouncy, xSpeed, ySpeed, centerX, centerY, rotationalSpeed, distanceFromCenter, angle, xMin, xMax, yMin, yMax) VALUES ? ';
-        addToLevel = [];
-        level = [4];
-        for (var i = 0; i < data.blocks_table.length; i++) {
-            addToLevel.push(level.concat(data.blocks_table[i]));
-        }
-        pool.query(saveCampaignLevel, [addToLevel], (err, response) => {
-            if (err) {
-                socket.emit('saveLevelResponse', { success: false });
-                return console.error(err.message);
-            } else {
-                socket.emit('saveLevelResponse', { success: true });
-            }
-        });
-    });
     socket.on('getPersonalBest', function (data) {
         let getPersonalBest = 'select best_time from players where player_username = ?';
         pool.query(getPersonalBest, [(users.find(item => item.id === sessionID)).name], (err, rows, fields) => {
@@ -351,15 +373,24 @@ io.on('connection', function (socket) {
         });
     });
     socket.on('setBest', function (data) {
-        let setPersonalBest = 'UPDATE players SET best_time = ? WHERE player_username = ?';
-        pool.query(setPersonalBest, [data.time, (users.find(item => item.id === sessionID)).name], (err, response) => {
+        let getCurrentLevel = 'select hardcore_level from players where player_username = ?';
+        pool.query(getCurrentLevel, (users.find(item => item.id === sessionID)).name, (err, rows) => {
             if (err) {
                 socket.emit('setBestResponse', { success: false });
                 return console.error(err.message);
-            } else {
-                socket.emit('setBestResponse', { success: true });
+            } else if (rows[0].hardcore_level >= 12) {
+                let setPersonalBest = 'UPDATE players SET best_time = ? WHERE player_username = ?';
+                pool.query(setPersonalBest, [data.time, (users.find(item => item.id === sessionID)).name], (err, response) => {
+                    if (err) {
+                        socket.emit('setBestResponse', { success: false });
+                        return console.error(err.message);
+                    } else {
+                        socket.emit('setBestResponse', { success: true });
+                    }
+                });
             }
         });
+
     });
 
     socket.on('startHardcoreGame', function (data) {
@@ -424,30 +455,49 @@ io.on('connection', function (socket) {
         });
     });
     socket.on('loadPublicLevelNames', function (data) {
-        let getPublicLevelNames = 'SELECT custom_level_name FROM custom_blocks_table where public = ? group by custom_level_name';
+        // let getPublicLevelNames = 'SELECT custom_level_name FROM custom_blocks_table where public = ? group by custom_level_name';
+        let getPublicLevelNames = 'SELECT custom_level_name, deaths_caused, times_beaten FROM custom_levels where public = ?';
         pool.query(getPublicLevelNames, 0, (err, rows) => {
             if (err) {
                 return console.error(err.message);
             } else {
-                socket.emit('loadPublicLevelNamesResponse', { publicNames: rows });
+                socket.emit('loadPublicLevelNamesResponse', { rows: rows });
             }
         });
     });
     socket.on('loadPublicLevelFromTemplate', function (data) {
-        let getPersonalRating = 'select rating from ratings where (level_name = ?) and (player_name = ?)'
-        pool.query(getPersonalRating, [data.name, (users.find(item => item.id === sessionID)).name], (err, rows) => {
-            if (err) {
-                return console.error(err.message);
-            } else {
-                let rating = 0;
-                if (rows.length > 0)
-                    rating = rows[0].rating;
-                let getPublicLevelFromTemplate = 'SELECT * FROM custom_blocks_table where (custom_level_name = ?) and (public = ?)';
-                pool.query(getPublicLevelFromTemplate, [data.name, 0], (err, rows) => {
+        pool.getConnection(function (err, conn) {
+            let getPersonalRating = 'select rating from ratings where (level_name = ?) and (player_name = ?)'
+            if (users.find(item => item.id === sessionID)) {
+                conn.query(getPersonalRating, [data.name, (users.find(item => item.id === sessionID)).name], (err, rows) => {
                     if (err) {
+                        conn.release();
                         return console.error(err.message);
                     } else {
-                        socket.emit('loadLevelFromTemplateResponse', { blockData: rows, rating: rating });
+                        let rating = 0;
+                        if (rows.length > 0)
+                            rating = rows[0].rating;
+                        let getPublicLevelFromTemplate = 'SELECT * FROM custom_blocks_table where (custom_level_name = ?) and (public = ?)';
+                        conn.query(getPublicLevelFromTemplate, [data.name, 0], (err, rows) => {
+                            if (err) {
+                                conn.release();
+                                return console.error(err.message);
+                            } else {
+                                socket.emit('loadLevelFromTemplateResponse', { blockData: rows, rating: rating });
+                                conn.release();
+                            }
+                        });
+                    }
+                });
+            } else {
+                let getPublicLevelFromTemplate = 'SELECT * FROM custom_blocks_table where (custom_level_name = ?) and (public = ?)';
+                conn.query(getPublicLevelFromTemplate, [data.name, 0], (err, rows) => {
+                    if (err) {
+                        conn.release();
+                        return console.error(err.message);
+                    } else {
+                        socket.emit('loadLevelFromTemplateResponse', { blockData: rows, rating: 0 });
+                        conn.release();
                     }
                 });
             }
@@ -522,6 +572,16 @@ io.on('connection', function (socket) {
         });
     }
 
+    socket.on('updateDeathCount', function (data) {
+        console.log("adding " + data.deathCount + " deaths to level " + data.levelName);
+        updateLevel = 'UPDATE custom_levels SET deaths_caused = deaths_caused + ? WHERE custom_level_name = ?';
+        pool.query(updateLevel, [data.deathCount, data.levelName], (err, rows) => {
+            if (err) {
+                return console.error(err.message);
+            }
+        });
+    });
+
     socket.on('deleteLevel', function (data) {
         var temination = "delete from custom_blocks_table where (username = ?) and (custom_level_name = ?)";
         pool.query(temination, [(users.find(item => item.id === sessionID)).name, data.levelName], (err, rows) => {
@@ -532,6 +592,10 @@ io.on('connection', function (socket) {
             }
         });
     });
+
+    // socket.on('loadPublicLevels', function (data) {
+
+    // });
 
     socket.on('disconnect', () => {
         console.log("temination");

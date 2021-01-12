@@ -51,7 +51,8 @@
     <section class="main-container">
         <div class="welcomeText">
             <h2>Welcome to Community Levels!</h2>
-            <p>Click on any level to try it out! And don't forget to give the level a five star rating if you like it!</p>
+            <p>Click on any level to try it out! And don't forget to give the level a five star rating if you like it!
+            </p>
         </div>
         <!-- <div id="viewOptions">
             <div id="searchOptions">
@@ -124,14 +125,6 @@
         canvas.width = 800;
         canvas.height = 400;
 
-        // logIn("king");
-
-        function selectTemplate(template) {
-            for (k = 0; k < document.getElementsByClassName("selected-level").length; k++) {
-                document.getElementsByClassName("selected-level").item(k).classList.remove("selected-level");
-            }
-        }
-
         var publicTemplatesLoaded = false;
         var socket = io();
 
@@ -139,12 +132,15 @@
         function viewTemplates() {
             if (!publicTemplatesLoaded) {
                 socket.emit('loadPublicLevelNames');
+                // socket.emit("loadPublicLevels");
                 publicTemplatesLoaded = true;
             }
             socket.on('loadPublicLevelNamesResponse', function (data) {
-                for (i = 0; i < data.publicNames.length; i++) {
-                    const name = data.publicNames[i].custom_level_name;
-                    const levelCard = createCard(name);
+                for (i = 0; i < data.rows.length; i++) {
+                    const name = data.rows[i].custom_level_name;
+                    const deathsCaused = data.rows[i].deaths_caused;
+                    const timesBeaten = data.rows[i].times_beaten;
+                    const levelCard = createCard(name, deathsCaused, timesBeaten);
                     document.body.getElementsByClassName("level-container").item(0).appendChild(levelCard);
                     socket.emit('loadPublicLevelTemplates', { canvasId: name });
                 }
@@ -153,7 +149,7 @@
 
         var unselectCard = false;
 
-        function createCard(name) {
+        function createCard(name, deathsCaused, amountOfTimesBeaten) {
             const card = document.createElement("div");
             const publicLevel = document.createElement("canvas");
             const levelTitle = document.createElement("div");
@@ -169,9 +165,9 @@
             levelName.classList.add("levelName");
             levelRating.innerText = "Unrated";
             levelRating.classList.add("rating");
-            totalDeaths.innerText = "Deaths caused: 303";
+            totalDeaths.innerText = "Deaths caused: " + deathsCaused;
             totalDeaths.classList.add("details");
-            timesBeaten.innerText = "Times beaten: 49";
+            timesBeaten.innerText = "Times beaten: " + amountOfTimesBeaten;
             timesBeaten.classList.add("details");
             card.classList.add("level");
             card.id = "cardId" + name;
@@ -186,12 +182,23 @@
                     selectedCard.classList.remove("selectedCard");
                     unselectCard = false;
                     gameStarted = false;
+                    if (deathCount > 0 && deathCount < 100) {
+                        selectedCard.getElementsByClassName("textContainer").item(0).getElementsByClassName("details").item(0).innerText = "Deaths caused: " + (deathsCaused + deathCount);
+                        socket.emit('updateDeathCount', { levelName: name, deathCount: deathCount });
+                    }
+                    deathCount = 0;
                     return;
                 }
                 if (!card.classList.contains("selectedCard")) {
                     for (k = 0; k < document.getElementsByClassName("selected-level").length; k++) {
+                        if (deathCount > 0 && deathCount < 100) {
+                            const level = document.getElementsByClassName("selectedCard").item(k);
+                            socket.emit('updateDeathCount', { levelName: level.id.slice(6, level.id.length), deathCount: deathCount });
+                            level.getElementsByClassName("textContainer").item(0).getElementsByClassName("details").item(0).innerText = "Deaths caused: " + (deathsCaused + deathCount);
+                        }
                         document.getElementsByClassName("selected-level").item(k).classList.remove("selected-level");
                     }
+                    deathCount = 0;
                     const mainContainer = document.getElementsByClassName("main-container").item(0);
                     var oldGameDiv = document.getElementById("gameDiv");
                     if (oldGameDiv) {
@@ -312,7 +319,7 @@
         }
 
         function rateLevel() {
-            socket.emit("getUsername");
+            // socket.emit("getUsername");
         }
         socket.on('getUsernameResponse', function (data) {
             if (data.user === '') {
@@ -321,7 +328,7 @@
                 const rating = document.getElementsByClassName("rated").length;
                 const level = document.getElementsByClassName("selected-level")[0];
                 const levelName = level.id.slice(8, level.id.length);
-                socket.emit('ratingLevel', { rating: rating, levelName: levelName });
+                // socket.emit('ratingLevel', { rating: rating, levelName: levelName });
             }
         });
 
@@ -331,9 +338,9 @@
             }
         });
 
-        document.getElementById("logging").onclick = function () {
-            location.href = "/logout";
-        };
+        // document.getElementById("logging").onclick = function () {
+        //     location.href = "/logout";
+        // };
         socket.on('loadPublicResponse', function (data) {
             var lvl = [];
             data.blockData.forEach(block => {
@@ -363,7 +370,7 @@
         })
         socket.on('getSessionID', function (data) {
             const sid = localStorage.getItem("uid");
-            socket.emit('getSessionIDResponse', { sid: sid });
+            // socket.emit('getSessionIDResponse', { sid: sid });
         })
     </script>
 </body>
